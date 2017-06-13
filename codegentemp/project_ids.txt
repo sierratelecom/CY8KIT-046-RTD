@@ -1,0 +1,7 @@
+D:\Dropbox\IoT Development\Cypress PSoC Development\RTD Design.cydsn\RTD Design.cyprj|df35b812-4538-48fa-ab48-f5f830eed6b6
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|b0ea7ad5-2807-4c7f-8c42-5ced81a47120
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|9acd313b-7d5e-43a4-a13e-506f60871490
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|f3d6c289-4125-46b4-b9b7-78990265df26
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a9087997-f0c8-4f72-aba2-44a901fab7a1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|a9ed3671-11a0-42c1-9bdc-b6cbec7625cc
+C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\dev\psoc4\PSoC4AnalogDevice\psoc4arch.cydsn\psoc4arch.cyprj|bb1e4810-a05e-466f-8f6d-bf9fd3f07bcb

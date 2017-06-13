@@ -1,0 +1,1598 @@
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"TxDmaS.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.TxDmaS_ChEnable,"ax",%progbits
+  18              		.align	2
+  19              		.code	16
+  20              		.thumb_func
+  21              		.type	TxDmaS_ChEnable, %function
+  22              	TxDmaS_ChEnable:
+  23              	.LFB0:
+  24              		.file 1 "Generated_Source\\PSoC4\\TxDmaS.h"
+   1:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+   2:Generated_Source\PSoC4/TxDmaS.h **** * File Name: TxDmaS.h
+   3:Generated_Source\PSoC4/TxDmaS.h **** * Version 1.0
+   4:Generated_Source\PSoC4/TxDmaS.h **** *
+   5:Generated_Source\PSoC4/TxDmaS.h **** * Description:
+   6:Generated_Source\PSoC4/TxDmaS.h **** *  This file provides DMA channel defines and API function definitions.
+   7:Generated_Source\PSoC4/TxDmaS.h **** *
+   8:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+   9:Generated_Source\PSoC4/TxDmaS.h **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/TxDmaS.h **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/TxDmaS.h **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/TxDmaS.h **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+  14:Generated_Source\PSoC4/TxDmaS.h **** 
+  15:Generated_Source\PSoC4/TxDmaS.h **** #ifndef CY_DMA_CHANNEL_TxDmaS_H
+  16:Generated_Source\PSoC4/TxDmaS.h **** #define CY_DMA_CHANNEL_TxDmaS_H
+  17:Generated_Source\PSoC4/TxDmaS.h **** 
+  18:Generated_Source\PSoC4/TxDmaS.h **** #include "CyDMA.h"
+  19:Generated_Source\PSoC4/TxDmaS.h **** 
+  20:Generated_Source\PSoC4/TxDmaS.h ****     
+  21:Generated_Source\PSoC4/TxDmaS.h **** /***************************************
+  22:Generated_Source\PSoC4/TxDmaS.h **** *   Conditional Compilation Parameters
+  23:Generated_Source\PSoC4/TxDmaS.h **** ***************************************/
+  24:Generated_Source\PSoC4/TxDmaS.h **** 
+  25:Generated_Source\PSoC4/TxDmaS.h **** #define TxDmaS_CHANNEL           (TxDmaS__CHANNEL_NUMBER)
+  26:Generated_Source\PSoC4/TxDmaS.h **** #define TxDmaS_CHANNEL_MASK      ((uint32)(1UL << TxDmaS_CHANNEL))
+  27:Generated_Source\PSoC4/TxDmaS.h **** 
+  28:Generated_Source\PSoC4/TxDmaS.h **** 
+  29:Generated_Source\PSoC4/TxDmaS.h **** /***************************************
+  30:Generated_Source\PSoC4/TxDmaS.h **** *        Function Prototypes
+  31:Generated_Source\PSoC4/TxDmaS.h **** ***************************************/
+  32:Generated_Source\PSoC4/TxDmaS.h **** 
+  33:Generated_Source\PSoC4/TxDmaS.h **** /* Functions specific to this DMA channel */
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 2
+
+
+  34:Generated_Source\PSoC4/TxDmaS.h **** void TxDmaS_Init(void);
+  35:Generated_Source\PSoC4/TxDmaS.h **** void TxDmaS_Start(void * srcAddress, void * dstAddress);
+  36:Generated_Source\PSoC4/TxDmaS.h **** 
+  37:Generated_Source\PSoC4/TxDmaS.h **** /* Inline functions that call global API functions */
+  38:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_ChEnable(void);
+  39:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_ChDisable(void);
+  40:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_Trigger(void);
+  41:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetPriority(int32 priority);
+  42:Generated_Source\PSoC4/TxDmaS.h **** static int32  TxDmaS_GetPriority(void);
+  43:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetNextDescriptor(int32 descriptor);
+  44:Generated_Source\PSoC4/TxDmaS.h **** static int32  TxDmaS_GetNextDescriptor(void);
+  45:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetConfiguration(int32 descriptor, const cydma_init_struct * config);
+  46:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_ValidateDescriptor(int32 descriptor);
+  47:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetDescriptorStatus(int32 descriptor);
+  48:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetSrcAddress(int32 descriptor, void * srcAddress);
+  49:Generated_Source\PSoC4/TxDmaS.h **** static void * TxDmaS_GetSrcAddress(int32 descriptor);
+  50:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetDstAddress(int32 descriptor, void * dstAddress);
+  51:Generated_Source\PSoC4/TxDmaS.h **** static void * TxDmaS_GetDstAddress(int32 descriptor);
+  52:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetDataElementSize(int32 descriptor, uint32 dataElementSize);
+  53:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetDataElementSize(int32 descriptor);
+  54:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetNumDataElements(int32 descriptor, int32 numDataElements);
+  55:Generated_Source\PSoC4/TxDmaS.h **** static int32  TxDmaS_GetNumDataElements(int32 descriptor);
+  56:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetSrcDstTransferWidth(int32 descriptor, uint32 transferWidth);
+  57:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetSrcDstTransferWidth(int32 descriptor);
+  58:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetAddressIncrement(int32 descriptor, uint32 addressIncrement);
+  59:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetAddressIncrement(int32 descriptor);
+  60:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetTriggerType(int32 descriptor, uint32 triggerType);
+  61:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetTriggerType(int32 descriptor);
+  62:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetTransferMode(int32 descriptor, uint32 transferMode);
+  63:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetTransferMode(int32 descriptor);
+  64:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetPreemptable(int32 descriptor, uint32 preemptable);
+  65:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetPreemptable(int32 descriptor);
+  66:Generated_Source\PSoC4/TxDmaS.h **** static void   TxDmaS_SetPostCompletionActions(int32 descriptor, uint32 actions);
+  67:Generated_Source\PSoC4/TxDmaS.h **** static uint32 TxDmaS_GetPostCompletionAction(int32 descriptor);
+  68:Generated_Source\PSoC4/TxDmaS.h **** static cydma_callback_t TxDmaS_SetInterruptCallback(cydma_callback_t callback);
+  69:Generated_Source\PSoC4/TxDmaS.h **** static cydma_callback_t TxDmaS_GetInterruptCallback(void);
+  70:Generated_Source\PSoC4/TxDmaS.h **** 
+  71:Generated_Source\PSoC4/TxDmaS.h **** 
+  72:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+  73:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_ChEnable
+  74:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+  75:Generated_Source\PSoC4/TxDmaS.h **** *
+  76:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+  77:Generated_Source\PSoC4/TxDmaS.h **** *  Enables the DMA channel. It is not necessary to call TxDmaS_ChEnable()
+  78:Generated_Source\PSoC4/TxDmaS.h **** *  because the TxDmaS_Start() API calls this function, which is the
+  79:Generated_Source\PSoC4/TxDmaS.h **** *  preferred method to begin the component operation.
+  80:Generated_Source\PSoC4/TxDmaS.h **** *
+  81:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+  82:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+  83:Generated_Source\PSoC4/TxDmaS.h **** *                   
+  84:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+  85:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+  86:Generated_Source\PSoC4/TxDmaS.h **** *
+  87:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+  88:Generated_Source\PSoC4/TxDmaS.h **** *  If this function is called before TxDmaS_Start(), or TxDmaS_Init()
+  89:Generated_Source\PSoC4/TxDmaS.h **** *  or TxDmaS_SetConfiguration(), and TxDmaS_SetSrcAddress()
+  90:Generated_Source\PSoC4/TxDmaS.h **** *  and TxDmaS_SetDstAddress the operation of the DMA is 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 3
+
+
+  91:Generated_Source\PSoC4/TxDmaS.h **** *  undefined and could result in system data corruption. 
+  92:Generated_Source\PSoC4/TxDmaS.h **** *
+  93:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+  94:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_ChEnable(void)
+  95:Generated_Source\PSoC4/TxDmaS.h **** {
+  25              		.loc 1 95 0
+  26              		.cfi_startproc
+  27 0000 80B5     		push	{r7, lr}
+  28              		.cfi_def_cfa_offset 8
+  29              		.cfi_offset 7, -8
+  30              		.cfi_offset 14, -4
+  31 0002 00AF     		add	r7, sp, #0
+  32              		.cfi_def_cfa_register 7
+  96:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaChEnable(TxDmaS_CHANNEL);
+  33              		.loc 1 96 0
+  34 0004 0220     		mov	r0, #2
+  35 0006 FFF7FEFF 		bl	CyDmaChEnable
+  97:Generated_Source\PSoC4/TxDmaS.h **** }
+  36              		.loc 1 97 0
+  37 000a BD46     		mov	sp, r7
+  38              		@ sp needed
+  39 000c 80BD     		pop	{r7, pc}
+  40              		.cfi_endproc
+  41              	.LFE0:
+  42              		.size	TxDmaS_ChEnable, .-TxDmaS_ChEnable
+  43 000e C046     		.section	.text.TxDmaS_ValidateDescriptor,"ax",%progbits
+  44              		.align	2
+  45              		.code	16
+  46              		.thumb_func
+  47              		.type	TxDmaS_ValidateDescriptor, %function
+  48              	TxDmaS_ValidateDescriptor:
+  49              	.LFB8:
+  98:Generated_Source\PSoC4/TxDmaS.h **** 
+  99:Generated_Source\PSoC4/TxDmaS.h **** 
+ 100:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 101:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_ChDisable
+ 102:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 103:Generated_Source\PSoC4/TxDmaS.h **** *
+ 104:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 105:Generated_Source\PSoC4/TxDmaS.h **** *  Disables the DMA channel.
+ 106:Generated_Source\PSoC4/TxDmaS.h **** *
+ 107:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 108:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 109:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 110:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 111:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 112:Generated_Source\PSoC4/TxDmaS.h **** *
+ 113:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 114:Generated_Source\PSoC4/TxDmaS.h **** *  If this function is called during a DMA transfer the transfer is aborted. 
+ 115:Generated_Source\PSoC4/TxDmaS.h **** *
+ 116:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 117:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_ChDisable(void)
+ 118:Generated_Source\PSoC4/TxDmaS.h **** {
+ 119:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaChDisable(TxDmaS_CHANNEL);
+ 120:Generated_Source\PSoC4/TxDmaS.h **** }
+ 121:Generated_Source\PSoC4/TxDmaS.h **** 
+ 122:Generated_Source\PSoC4/TxDmaS.h **** 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 4
+
+
+ 123:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 124:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_Trigger
+ 125:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 126:Generated_Source\PSoC4/TxDmaS.h **** *
+ 127:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 128:Generated_Source\PSoC4/TxDmaS.h **** *  Triggers the DMA channel, this is useful only for software triggers. This is
+ 129:Generated_Source\PSoC4/TxDmaS.h **** *  not needed when hardware triggers are used.
+ 130:Generated_Source\PSoC4/TxDmaS.h **** *
+ 131:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 132:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 133:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 134:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 135:Generated_Source\PSoC4/TxDmaS.h **** *  None. 
+ 136:Generated_Source\PSoC4/TxDmaS.h **** *
+ 137:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 138:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_Trigger(void)
+ 139:Generated_Source\PSoC4/TxDmaS.h **** {
+ 140:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaTrigger(TxDmaS_CHANNEL);
+ 141:Generated_Source\PSoC4/TxDmaS.h **** }
+ 142:Generated_Source\PSoC4/TxDmaS.h **** 
+ 143:Generated_Source\PSoC4/TxDmaS.h **** 
+ 144:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 145:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_SetPriority
+ 146:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 147:Generated_Source\PSoC4/TxDmaS.h **** *
+ 148:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 149:Generated_Source\PSoC4/TxDmaS.h **** *  Sets the priority for the channel.
+ 150:Generated_Source\PSoC4/TxDmaS.h **** *
+ 151:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 152:Generated_Source\PSoC4/TxDmaS.h **** *  priority: Priority for channel. Priority can be 0,1,2, or 3.
+ 153:Generated_Source\PSoC4/TxDmaS.h **** *            0 is the highest priority.
+ 154:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 155:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 156:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 157:Generated_Source\PSoC4/TxDmaS.h **** *
+ 158:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 159:Generated_Source\PSoC4/TxDmaS.h **** *  This function should not be called while the channel is enabled.
+ 160:Generated_Source\PSoC4/TxDmaS.h **** *
+ 161:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 162:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_SetPriority(int32 priority)
+ 163:Generated_Source\PSoC4/TxDmaS.h **** {
+ 164:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaSetPriority(TxDmaS_CHANNEL, priority);
+ 165:Generated_Source\PSoC4/TxDmaS.h **** }
+ 166:Generated_Source\PSoC4/TxDmaS.h **** 
+ 167:Generated_Source\PSoC4/TxDmaS.h **** 
+ 168:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 169:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_GetPriority
+ 170:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 171:Generated_Source\PSoC4/TxDmaS.h **** *
+ 172:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 173:Generated_Source\PSoC4/TxDmaS.h **** *  Gets the priority for the channel.
+ 174:Generated_Source\PSoC4/TxDmaS.h **** *
+ 175:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 176:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 177:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 178:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 179:Generated_Source\PSoC4/TxDmaS.h **** *  Priority for channel. Priority can be 0,1,2, or 3. 0 is the highest priority.
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 5
+
+
+ 180:Generated_Source\PSoC4/TxDmaS.h **** *
+ 181:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 182:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE int32 TxDmaS_GetPriority(void)
+ 183:Generated_Source\PSoC4/TxDmaS.h **** {
+ 184:Generated_Source\PSoC4/TxDmaS.h ****     return (CyDmaGetPriority(TxDmaS_CHANNEL));
+ 185:Generated_Source\PSoC4/TxDmaS.h **** }
+ 186:Generated_Source\PSoC4/TxDmaS.h **** 
+ 187:Generated_Source\PSoC4/TxDmaS.h **** 
+ 188:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 189:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_SetNextDescriptor
+ 190:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 191:Generated_Source\PSoC4/TxDmaS.h **** *
+ 192:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 193:Generated_Source\PSoC4/TxDmaS.h **** *  Sets the descriptor that should be run the next time the channel is
+ 194:Generated_Source\PSoC4/TxDmaS.h **** *  triggered.
+ 195:Generated_Source\PSoC4/TxDmaS.h **** *
+ 196:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 197:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Next Descriptor to run (0 or 1).
+ 198:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 199:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 200:Generated_Source\PSoC4/TxDmaS.h **** *  This function should not be called while the channel is enabled.
+ 201:Generated_Source\PSoC4/TxDmaS.h **** *
+ 202:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 203:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_SetNextDescriptor(int32 descriptor)
+ 204:Generated_Source\PSoC4/TxDmaS.h **** {
+ 205:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaSetNextDescriptor(TxDmaS_CHANNEL, descriptor);
+ 206:Generated_Source\PSoC4/TxDmaS.h **** }
+ 207:Generated_Source\PSoC4/TxDmaS.h **** 
+ 208:Generated_Source\PSoC4/TxDmaS.h **** 
+ 209:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 210:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_GetNextDescriptor
+ 211:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 212:Generated_Source\PSoC4/TxDmaS.h **** *
+ 213:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 214:Generated_Source\PSoC4/TxDmaS.h **** *  Returns the next descriptor that should be run, as set by 
+ 215:Generated_Source\PSoC4/TxDmaS.h **** *  TxDmaS_SetNextDescriptor().
+ 216:Generated_Source\PSoC4/TxDmaS.h **** *
+ 217:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 218:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 219:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 220:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 221:Generated_Source\PSoC4/TxDmaS.h **** *  Next Descriptor to run (0 or 1).
+ 222:Generated_Source\PSoC4/TxDmaS.h **** *
+ 223:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 224:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE int32 TxDmaS_GetNextDescriptor(void)
+ 225:Generated_Source\PSoC4/TxDmaS.h **** {
+ 226:Generated_Source\PSoC4/TxDmaS.h ****     return (CyDmaGetNextDescriptor(TxDmaS_CHANNEL));
+ 227:Generated_Source\PSoC4/TxDmaS.h **** }
+ 228:Generated_Source\PSoC4/TxDmaS.h **** 
+ 229:Generated_Source\PSoC4/TxDmaS.h **** 
+ 230:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 231:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_SetConfiguration
+ 232:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 233:Generated_Source\PSoC4/TxDmaS.h **** *
+ 234:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 235:Generated_Source\PSoC4/TxDmaS.h **** *  Sets configuration information for the specified descriptor.
+ 236:Generated_Source\PSoC4/TxDmaS.h **** *
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 6
+
+
+ 237:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 238:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 239:Generated_Source\PSoC4/TxDmaS.h **** *  config: Pointer to a configuration structure. Refer to cydma_init_struct
+ 240:Generated_Source\PSoC4/TxDmaS.h **** *          structure definition in CyDMA_P4.h or the component datasheet.
+ 241:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 242:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 243:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 244:Generated_Source\PSoC4/TxDmaS.h **** *
+ 245:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 246:Generated_Source\PSoC4/TxDmaS.h **** *  The status register associated with the specified descriptor is reset to
+ 247:Generated_Source\PSoC4/TxDmaS.h **** *  zero after this function call. This function also validates the descriptor.
+ 248:Generated_Source\PSoC4/TxDmaS.h **** *  This function should not be called while the descriptor is active.
+ 249:Generated_Source\PSoC4/TxDmaS.h **** *  This can be checked by calling CyDmaGetStatus().
+ 250:Generated_Source\PSoC4/TxDmaS.h **** *
+ 251:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 252:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_SetConfiguration(int32 descriptor, const cydma_init_struct * config)
+ 253:Generated_Source\PSoC4/TxDmaS.h **** {
+ 254:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaSetConfiguration(TxDmaS_CHANNEL, descriptor, config);
+ 255:Generated_Source\PSoC4/TxDmaS.h **** }
+ 256:Generated_Source\PSoC4/TxDmaS.h **** 
+ 257:Generated_Source\PSoC4/TxDmaS.h **** 
+ 258:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 259:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_ValidateDescriptor
+ 260:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 261:Generated_Source\PSoC4/TxDmaS.h **** *
+ 262:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 263:Generated_Source\PSoC4/TxDmaS.h **** *  Validates the specified descriptor after it has been invalidated.
+ 264:Generated_Source\PSoC4/TxDmaS.h **** *
+ 265:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 266:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 267:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 268:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 269:Generated_Source\PSoC4/TxDmaS.h **** *  None. 
+ 270:Generated_Source\PSoC4/TxDmaS.h **** *
+ 271:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 272:Generated_Source\PSoC4/TxDmaS.h **** *  The status register associated with the specified descriptor is reset to
+ 273:Generated_Source\PSoC4/TxDmaS.h **** *  zero after this function call. This function should not be called while the
+ 274:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor is active. This can be checked by calling CyDmaGetStatus().
+ 275:Generated_Source\PSoC4/TxDmaS.h **** *
+ 276:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 277:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_ValidateDescriptor(int32 descriptor)
+ 278:Generated_Source\PSoC4/TxDmaS.h **** {
+  50              		.loc 1 278 0
+  51              		.cfi_startproc
+  52 0000 80B5     		push	{r7, lr}
+  53              		.cfi_def_cfa_offset 8
+  54              		.cfi_offset 7, -8
+  55              		.cfi_offset 14, -4
+  56 0002 82B0     		sub	sp, sp, #8
+  57              		.cfi_def_cfa_offset 16
+  58 0004 00AF     		add	r7, sp, #0
+  59              		.cfi_def_cfa_register 7
+  60 0006 7860     		str	r0, [r7, #4]
+ 279:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaValidateDescriptor(TxDmaS_CHANNEL, descriptor);
+  61              		.loc 1 279 0
+  62 0008 7B68     		ldr	r3, [r7, #4]
+  63 000a 0220     		mov	r0, #2
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 7
+
+
+  64 000c 191C     		mov	r1, r3
+  65 000e FFF7FEFF 		bl	CyDmaValidateDescriptor
+ 280:Generated_Source\PSoC4/TxDmaS.h **** }
+  66              		.loc 1 280 0
+  67 0012 BD46     		mov	sp, r7
+  68 0014 02B0     		add	sp, sp, #8
+  69              		@ sp needed
+  70 0016 80BD     		pop	{r7, pc}
+  71              		.cfi_endproc
+  72              	.LFE8:
+  73              		.size	TxDmaS_ValidateDescriptor, .-TxDmaS_ValidateDescriptor
+  74              		.section	.text.TxDmaS_SetSrcAddress,"ax",%progbits
+  75              		.align	2
+  76              		.code	16
+  77              		.thumb_func
+  78              		.type	TxDmaS_SetSrcAddress, %function
+  79              	TxDmaS_SetSrcAddress:
+  80              	.LFB10:
+ 281:Generated_Source\PSoC4/TxDmaS.h **** 
+ 282:Generated_Source\PSoC4/TxDmaS.h **** 
+ 283:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 284:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_GetDescriptorStatus
+ 285:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 286:Generated_Source\PSoC4/TxDmaS.h **** *
+ 287:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 288:Generated_Source\PSoC4/TxDmaS.h **** *  Returns the status of the specified descriptor.
+ 289:Generated_Source\PSoC4/TxDmaS.h **** *
+ 290:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 291:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 292:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 293:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 294:Generated_Source\PSoC4/TxDmaS.h **** *  Returns the contents of the specified descriptors status register. Refer to 
+ 295:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor status register bit definitions in CyDMA_P4.h or the API
+ 296:Generated_Source\PSoC4/TxDmaS.h **** *  description in the DMA channel datasheet for more information.
+ 297:Generated_Source\PSoC4/TxDmaS.h **** *
+ 298:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 299:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE uint32 TxDmaS_GetDescriptorStatus(int32 descriptor)
+ 300:Generated_Source\PSoC4/TxDmaS.h **** {
+ 301:Generated_Source\PSoC4/TxDmaS.h ****     return (CyDmaGetDescriptorStatus(TxDmaS_CHANNEL, descriptor));
+ 302:Generated_Source\PSoC4/TxDmaS.h **** }
+ 303:Generated_Source\PSoC4/TxDmaS.h **** 
+ 304:Generated_Source\PSoC4/TxDmaS.h **** 
+ 305:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 306:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_SetSrcAddress
+ 307:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 308:Generated_Source\PSoC4/TxDmaS.h **** *
+ 309:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 310:Generated_Source\PSoC4/TxDmaS.h **** *  Configures the source address for the specified descriptor.
+ 311:Generated_Source\PSoC4/TxDmaS.h **** *
+ 312:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 313:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 314:Generated_Source\PSoC4/TxDmaS.h **** *  srcAddress: Address of DMA transfer source.
+ 315:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 316:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 317:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 318:Generated_Source\PSoC4/TxDmaS.h **** *
+ 319:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 8
+
+
+ 320:Generated_Source\PSoC4/TxDmaS.h **** *  This function should not be called when the specified descriptor is active
+ 321:Generated_Source\PSoC4/TxDmaS.h **** *  in the DMA transfer engine. This can be checked by calling CyDmaGetStatus(). 
+ 322:Generated_Source\PSoC4/TxDmaS.h **** *
+ 323:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 324:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_SetSrcAddress(int32 descriptor, void * srcAddress)
+ 325:Generated_Source\PSoC4/TxDmaS.h **** {
+  81              		.loc 1 325 0
+  82              		.cfi_startproc
+  83 0000 80B5     		push	{r7, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 7, -8
+  86              		.cfi_offset 14, -4
+  87 0002 82B0     		sub	sp, sp, #8
+  88              		.cfi_def_cfa_offset 16
+  89 0004 00AF     		add	r7, sp, #0
+  90              		.cfi_def_cfa_register 7
+  91 0006 7860     		str	r0, [r7, #4]
+  92 0008 3960     		str	r1, [r7]
+ 326:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaSetSrcAddress(TxDmaS_CHANNEL, descriptor, srcAddress);
+  93              		.loc 1 326 0
+  94 000a 7A68     		ldr	r2, [r7, #4]
+  95 000c 3B68     		ldr	r3, [r7]
+  96 000e 0220     		mov	r0, #2
+  97 0010 111C     		mov	r1, r2
+  98 0012 1A1C     		mov	r2, r3
+  99 0014 FFF7FEFF 		bl	CyDmaSetSrcAddress
+ 327:Generated_Source\PSoC4/TxDmaS.h **** }
+ 100              		.loc 1 327 0
+ 101 0018 BD46     		mov	sp, r7
+ 102 001a 02B0     		add	sp, sp, #8
+ 103              		@ sp needed
+ 104 001c 80BD     		pop	{r7, pc}
+ 105              		.cfi_endproc
+ 106              	.LFE10:
+ 107              		.size	TxDmaS_SetSrcAddress, .-TxDmaS_SetSrcAddress
+ 108 001e C046     		.section	.text.TxDmaS_SetDstAddress,"ax",%progbits
+ 109              		.align	2
+ 110              		.code	16
+ 111              		.thumb_func
+ 112              		.type	TxDmaS_SetDstAddress, %function
+ 113              	TxDmaS_SetDstAddress:
+ 114              	.LFB12:
+ 328:Generated_Source\PSoC4/TxDmaS.h **** 
+ 329:Generated_Source\PSoC4/TxDmaS.h **** 
+ 330:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 331:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_GetSrcAddress
+ 332:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 333:Generated_Source\PSoC4/TxDmaS.h **** *
+ 334:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 335:Generated_Source\PSoC4/TxDmaS.h **** *  Returns the source address for the specified descriptor, set by either 
+ 336:Generated_Source\PSoC4/TxDmaS.h **** *  TxDmaS_Start() or TxDmaS_SetSrcAddress().
+ 337:Generated_Source\PSoC4/TxDmaS.h **** *
+ 338:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 339:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Specifies descriptor (0 or 1) used by this function.
+ 340:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 341:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 342:Generated_Source\PSoC4/TxDmaS.h **** *  Source address written to specified descriptor.
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 9
+
+
+ 343:Generated_Source\PSoC4/TxDmaS.h **** *
+ 344:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 345:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void * TxDmaS_GetSrcAddress(int32 descriptor)
+ 346:Generated_Source\PSoC4/TxDmaS.h **** {
+ 347:Generated_Source\PSoC4/TxDmaS.h ****     return (CyDmaGetSrcAddress(TxDmaS_CHANNEL, descriptor));
+ 348:Generated_Source\PSoC4/TxDmaS.h **** }
+ 349:Generated_Source\PSoC4/TxDmaS.h **** 
+ 350:Generated_Source\PSoC4/TxDmaS.h **** 
+ 351:Generated_Source\PSoC4/TxDmaS.h **** /*******************************************************************************
+ 352:Generated_Source\PSoC4/TxDmaS.h **** * Function Name: TxDmaS_SetDstAddress
+ 353:Generated_Source\PSoC4/TxDmaS.h **** ********************************************************************************
+ 354:Generated_Source\PSoC4/TxDmaS.h **** *
+ 355:Generated_Source\PSoC4/TxDmaS.h **** * Summary:
+ 356:Generated_Source\PSoC4/TxDmaS.h **** *  Configures the destination address for the specified descriptor.
+ 357:Generated_Source\PSoC4/TxDmaS.h **** *
+ 358:Generated_Source\PSoC4/TxDmaS.h **** * Parameters:
+ 359:Generated_Source\PSoC4/TxDmaS.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 360:Generated_Source\PSoC4/TxDmaS.h **** *  dstAddress: Address of DMA transfer destination.
+ 361:Generated_Source\PSoC4/TxDmaS.h **** *                   
+ 362:Generated_Source\PSoC4/TxDmaS.h **** * Return:
+ 363:Generated_Source\PSoC4/TxDmaS.h **** *  None.
+ 364:Generated_Source\PSoC4/TxDmaS.h **** *
+ 365:Generated_Source\PSoC4/TxDmaS.h **** * Side effect:
+ 366:Generated_Source\PSoC4/TxDmaS.h **** *  This function should not be called when the specified descriptor is active
+ 367:Generated_Source\PSoC4/TxDmaS.h **** *  in the DMA transfer engine. This can be checked by calling CyDmaGetStatus(). 
+ 368:Generated_Source\PSoC4/TxDmaS.h **** *
+ 369:Generated_Source\PSoC4/TxDmaS.h **** *******************************************************************************/
+ 370:Generated_Source\PSoC4/TxDmaS.h **** static CY_INLINE void TxDmaS_SetDstAddress(int32 descriptor, void * dstAddress)
+ 371:Generated_Source\PSoC4/TxDmaS.h **** {
+ 115              		.loc 1 371 0
+ 116              		.cfi_startproc
+ 117 0000 80B5     		push	{r7, lr}
+ 118              		.cfi_def_cfa_offset 8
+ 119              		.cfi_offset 7, -8
+ 120              		.cfi_offset 14, -4
+ 121 0002 82B0     		sub	sp, sp, #8
+ 122              		.cfi_def_cfa_offset 16
+ 123 0004 00AF     		add	r7, sp, #0
+ 124              		.cfi_def_cfa_register 7
+ 125 0006 7860     		str	r0, [r7, #4]
+ 126 0008 3960     		str	r1, [r7]
+ 372:Generated_Source\PSoC4/TxDmaS.h ****     CyDmaSetDstAddress(TxDmaS_CHANNEL, descriptor, dstAddress);
+ 127              		.loc 1 372 0
+ 128 000a 7A68     		ldr	r2, [r7, #4]
+ 129 000c 3B68     		ldr	r3, [r7]
+ 130 000e 0220     		mov	r0, #2
+ 131 0010 111C     		mov	r1, r2
+ 132 0012 1A1C     		mov	r2, r3
+ 133 0014 FFF7FEFF 		bl	CyDmaSetDstAddress
+ 373:Generated_Source\PSoC4/TxDmaS.h **** }
+ 134              		.loc 1 373 0
+ 135 0018 BD46     		mov	sp, r7
+ 136 001a 02B0     		add	sp, sp, #8
+ 137              		@ sp needed
+ 138 001c 80BD     		pop	{r7, pc}
+ 139              		.cfi_endproc
+ 140              	.LFE12:
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 10
+
+
+ 141              		.size	TxDmaS_SetDstAddress, .-TxDmaS_SetDstAddress
+ 142              		.global	TxDmaS_initVar
+ 143 001e C046     		.bss
+ 144              		.type	TxDmaS_initVar, %object
+ 145              		.size	TxDmaS_initVar, 1
+ 146              	TxDmaS_initVar:
+ 147 0000 00       		.space	1
+ 148              		.section	.text.TxDmaS_Start,"ax",%progbits
+ 149              		.align	2
+ 150              		.global	TxDmaS_Start
+ 151              		.code	16
+ 152              		.thumb_func
+ 153              		.type	TxDmaS_Start, %function
+ 154              	TxDmaS_Start:
+ 155              	.LFB32:
+ 156              		.file 2 "Generated_Source\\PSoC4\\TxDmaS.c"
+   1:Generated_Source\PSoC4/TxDmaS.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/TxDmaS.c **** * File Name: TxDmaS.h
+   3:Generated_Source\PSoC4/TxDmaS.c **** * Version 1.0
+   4:Generated_Source\PSoC4/TxDmaS.c **** *
+   5:Generated_Source\PSoC4/TxDmaS.c **** * Description:
+   6:Generated_Source\PSoC4/TxDmaS.c **** *  This file contains all of the channel DMA API functions.
+   7:Generated_Source\PSoC4/TxDmaS.c **** *
+   8:Generated_Source\PSoC4/TxDmaS.c **** ********************************************************************************
+   9:Generated_Source\PSoC4/TxDmaS.c **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/TxDmaS.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/TxDmaS.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/TxDmaS.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/TxDmaS.c **** *******************************************************************************/
+  14:Generated_Source\PSoC4/TxDmaS.c **** 
+  15:Generated_Source\PSoC4/TxDmaS.c **** #include "TxDmaS.h"
+  16:Generated_Source\PSoC4/TxDmaS.c **** 
+  17:Generated_Source\PSoC4/TxDmaS.c **** uint8 TxDmaS_initVar = 0u;
+  18:Generated_Source\PSoC4/TxDmaS.c **** 
+  19:Generated_Source\PSoC4/TxDmaS.c **** 
+  20:Generated_Source\PSoC4/TxDmaS.c **** /*******************************************************************************
+  21:Generated_Source\PSoC4/TxDmaS.c **** * Function Name: TxDmaS_Start
+  22:Generated_Source\PSoC4/TxDmaS.c **** ********************************************************************************
+  23:Generated_Source\PSoC4/TxDmaS.c **** *
+  24:Generated_Source\PSoC4/TxDmaS.c **** * Summary:
+  25:Generated_Source\PSoC4/TxDmaS.c **** *  Calls Init() to configure the DMA channel based on the customizer settings if
+  26:Generated_Source\PSoC4/TxDmaS.c **** *  the channel has not been initialized before.
+  27:Generated_Source\PSoC4/TxDmaS.c **** *  Sets source and destination address, validates descriptor 0 and enables the
+  28:Generated_Source\PSoC4/TxDmaS.c **** *  channel. After calling this function the DMA channel is active and waiting
+  29:Generated_Source\PSoC4/TxDmaS.c **** *  for a trigger.
+  30:Generated_Source\PSoC4/TxDmaS.c **** *
+  31:Generated_Source\PSoC4/TxDmaS.c **** * Parameters:
+  32:Generated_Source\PSoC4/TxDmaS.c **** *  srcAddress: Address of DMA transfer source for descriptor 0.
+  33:Generated_Source\PSoC4/TxDmaS.c **** *  dstAddress: Address of DMA transfer destination for descriptor 0.
+  34:Generated_Source\PSoC4/TxDmaS.c **** *                   
+  35:Generated_Source\PSoC4/TxDmaS.c **** * Return:
+  36:Generated_Source\PSoC4/TxDmaS.c **** *  None.
+  37:Generated_Source\PSoC4/TxDmaS.c **** *
+  38:Generated_Source\PSoC4/TxDmaS.c **** *******************************************************************************/
+  39:Generated_Source\PSoC4/TxDmaS.c **** void TxDmaS_Start(void * srcAddress, void * dstAddress)
+  40:Generated_Source\PSoC4/TxDmaS.c **** {
+ 157              		.loc 2 40 0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 11
+
+
+ 158              		.cfi_startproc
+ 159 0000 80B5     		push	{r7, lr}
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 7, -8
+ 162              		.cfi_offset 14, -4
+ 163 0002 82B0     		sub	sp, sp, #8
+ 164              		.cfi_def_cfa_offset 16
+ 165 0004 00AF     		add	r7, sp, #0
+ 166              		.cfi_def_cfa_register 7
+ 167 0006 7860     		str	r0, [r7, #4]
+ 168 0008 3960     		str	r1, [r7]
+  41:Generated_Source\PSoC4/TxDmaS.c ****     if(0u == TxDmaS_initVar)
+ 169              		.loc 2 41 0
+ 170 000a 0E4B     		ldr	r3, .L7
+ 171 000c 1B78     		ldrb	r3, [r3]
+ 172 000e 002B     		cmp	r3, #0
+ 173 0010 04D1     		bne	.L6
+  42:Generated_Source\PSoC4/TxDmaS.c ****     {
+  43:Generated_Source\PSoC4/TxDmaS.c ****         TxDmaS_Init();
+ 174              		.loc 2 43 0
+ 175 0012 FFF7FEFF 		bl	TxDmaS_Init
+  44:Generated_Source\PSoC4/TxDmaS.c ****         TxDmaS_initVar = 1u;
+ 176              		.loc 2 44 0
+ 177 0016 0B4B     		ldr	r3, .L7
+ 178 0018 0122     		mov	r2, #1
+ 179 001a 1A70     		strb	r2, [r3]
+ 180              	.L6:
+  45:Generated_Source\PSoC4/TxDmaS.c ****     }
+  46:Generated_Source\PSoC4/TxDmaS.c ****     CyDmaEnable();
+ 181              		.loc 2 46 0
+ 182 001c FFF7FEFF 		bl	CyDmaEnable
+  47:Generated_Source\PSoC4/TxDmaS.c ****     TxDmaS_SetSrcAddress(0, srcAddress);
+ 183              		.loc 2 47 0
+ 184 0020 7B68     		ldr	r3, [r7, #4]
+ 185 0022 0020     		mov	r0, #0
+ 186 0024 191C     		mov	r1, r3
+ 187 0026 FFF7FEFF 		bl	TxDmaS_SetSrcAddress
+  48:Generated_Source\PSoC4/TxDmaS.c ****     TxDmaS_SetDstAddress(0, dstAddress);
+ 188              		.loc 2 48 0
+ 189 002a 3B68     		ldr	r3, [r7]
+ 190 002c 0020     		mov	r0, #0
+ 191 002e 191C     		mov	r1, r3
+ 192 0030 FFF7FEFF 		bl	TxDmaS_SetDstAddress
+  49:Generated_Source\PSoC4/TxDmaS.c ****     TxDmaS_ValidateDescriptor(0);
+ 193              		.loc 2 49 0
+ 194 0034 0020     		mov	r0, #0
+ 195 0036 FFF7FEFF 		bl	TxDmaS_ValidateDescriptor
+  50:Generated_Source\PSoC4/TxDmaS.c ****     TxDmaS_ChEnable();
+ 196              		.loc 2 50 0
+ 197 003a FFF7FEFF 		bl	TxDmaS_ChEnable
+  51:Generated_Source\PSoC4/TxDmaS.c **** }
+ 198              		.loc 2 51 0
+ 199 003e BD46     		mov	sp, r7
+ 200 0040 02B0     		add	sp, sp, #8
+ 201              		@ sp needed
+ 202 0042 80BD     		pop	{r7, pc}
+ 203              	.L8:
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 12
+
+
+ 204              		.align	2
+ 205              	.L7:
+ 206 0044 00000000 		.word	TxDmaS_initVar
+ 207              		.cfi_endproc
+ 208              	.LFE32:
+ 209              		.size	TxDmaS_Start, .-TxDmaS_Start
+ 210              		.section	.text.TxDmaS_Init,"ax",%progbits
+ 211              		.align	2
+ 212              		.global	TxDmaS_Init
+ 213              		.code	16
+ 214              		.thumb_func
+ 215              		.type	TxDmaS_Init, %function
+ 216              	TxDmaS_Init:
+ 217              	.LFB33:
+  52:Generated_Source\PSoC4/TxDmaS.c **** 
+  53:Generated_Source\PSoC4/TxDmaS.c **** 
+  54:Generated_Source\PSoC4/TxDmaS.c **** /*******************************************************************************
+  55:Generated_Source\PSoC4/TxDmaS.c **** * Function Name: TxDmaS_Init
+  56:Generated_Source\PSoC4/TxDmaS.c **** ********************************************************************************
+  57:Generated_Source\PSoC4/TxDmaS.c **** *
+  58:Generated_Source\PSoC4/TxDmaS.c **** * Summary:
+  59:Generated_Source\PSoC4/TxDmaS.c **** *  Initializes the DMA channel based on the parameters set in the component
+  60:Generated_Source\PSoC4/TxDmaS.c **** *  customizer. It is not necessary to call TxDmaS_Init() because the
+  61:Generated_Source\PSoC4/TxDmaS.c **** *  TxDmaS_Start() API calls this function, which is the preferred method
+  62:Generated_Source\PSoC4/TxDmaS.c **** *  to begin component operation.
+  63:Generated_Source\PSoC4/TxDmaS.c **** *
+  64:Generated_Source\PSoC4/TxDmaS.c **** * Parameters:
+  65:Generated_Source\PSoC4/TxDmaS.c **** *  None.
+  66:Generated_Source\PSoC4/TxDmaS.c **** *                   
+  67:Generated_Source\PSoC4/TxDmaS.c **** * Return:
+  68:Generated_Source\PSoC4/TxDmaS.c **** *  None.
+  69:Generated_Source\PSoC4/TxDmaS.c **** *
+  70:Generated_Source\PSoC4/TxDmaS.c **** * Side effect:
+  71:Generated_Source\PSoC4/TxDmaS.c **** *  The first descriptor is set to descriptor 0. This function should not be
+  72:Generated_Source\PSoC4/TxDmaS.c **** *  called while the channel is enabled. All settings will be reset to their
+  73:Generated_Source\PSoC4/TxDmaS.c **** *  initial values.
+  74:Generated_Source\PSoC4/TxDmaS.c **** *
+  75:Generated_Source\PSoC4/TxDmaS.c **** *******************************************************************************/
+  76:Generated_Source\PSoC4/TxDmaS.c **** void TxDmaS_Init(void)
+  77:Generated_Source\PSoC4/TxDmaS.c **** {
+ 218              		.loc 2 77 0
+ 219              		.cfi_startproc
+ 220 0000 80B5     		push	{r7, lr}
+ 221              		.cfi_def_cfa_offset 8
+ 222              		.cfi_offset 7, -8
+ 223              		.cfi_offset 14, -4
+ 224 0002 00AF     		add	r7, sp, #0
+ 225              		.cfi_def_cfa_register 7
+  78:Generated_Source\PSoC4/TxDmaS.c ****     CYDMA_CH_CTL_BASE.ctl[TxDmaS_CHANNEL] = TxDmaS_CHANNEL_CFG;
+ 226              		.loc 2 78 0
+ 227 0004 054B     		ldr	r3, .L10
+ 228 0006 C022     		mov	r2, #192
+ 229 0008 9205     		lsl	r2, r2, #22
+ 230 000a 9A60     		str	r2, [r3, #8]
+  79:Generated_Source\PSoC4/TxDmaS.c ****     CYDMA_DESCR_BASE.descriptor[TxDmaS_CHANNEL][0].ctl = TxDmaS_DESCR0_CFG;
+ 231              		.loc 2 79 0
+ 232 000c 044B     		ldr	r3, .L10+4
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 13
+
+
+ 233 000e 054A     		ldr	r2, .L10+8
+ 234 0010 9A64     		str	r2, [r3, #72]
+  80:Generated_Source\PSoC4/TxDmaS.c ****     CYDMA_DESCR_BASE.descriptor[TxDmaS_CHANNEL][1].ctl = TxDmaS_DESCR1_CFG;
+ 235              		.loc 2 80 0
+ 236 0012 034B     		ldr	r3, .L10+4
+ 237 0014 0022     		mov	r2, #0
+ 238 0016 9A65     		str	r2, [r3, #88]
+  81:Generated_Source\PSoC4/TxDmaS.c **** 
+  82:Generated_Source\PSoC4/TxDmaS.c ****     /* If the Generate IRQ option is selected for descriptor 0 or 1, set the
+  83:Generated_Source\PSoC4/TxDmaS.c ****     * channel bit field in the DMA interrupt mask register.
+  84:Generated_Source\PSoC4/TxDmaS.c ****     */
+  85:Generated_Source\PSoC4/TxDmaS.c ****     #if (0u != ((TxDmaS_DESCR0_CFG | TxDmaS_DESCR1_CFG) & CYDMA_GENERATE_IRQ))
+  86:Generated_Source\PSoC4/TxDmaS.c ****         CYDMA_INTR_MASK_REG |= TxDmaS_CHANNEL_MASK;
+  87:Generated_Source\PSoC4/TxDmaS.c ****     #endif /* (0u != ((TxDmaS_DESCR0_CFG | TxDmaS_DESCR1_CFG) & CYDMA_GENERATE_IRQ)) */
+  88:Generated_Source\PSoC4/TxDmaS.c **** }
+ 239              		.loc 2 88 0
+ 240 0018 BD46     		mov	sp, r7
+ 241              		@ sp needed
+ 242 001a 80BD     		pop	{r7, pc}
+ 243              	.L11:
+ 244              		.align	2
+ 245              	.L10:
+ 246 001c 80101040 		.word	1074794624
+ 247 0020 00181040 		.word	1074796544
+ 248 0024 02008051 		.word	1367343106
+ 249              		.cfi_endproc
+ 250              	.LFE33:
+ 251              		.size	TxDmaS_Init, .-TxDmaS_Init
+ 252              		.text
+ 253              	.Letext0:
+ 254              		.file 3 "Generated_Source\\PSoC4\\cytypes.h"
+ 255              		.file 4 "Generated_Source\\PSoC4\\CyDMA.h"
+ 256              		.section	.debug_info,"",%progbits
+ 257              	.Ldebug_info0:
+ 258 0000 4A020000 		.4byte	0x24a
+ 259 0004 0400     		.2byte	0x4
+ 260 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 261 000a 04       		.byte	0x4
+ 262 000b 01       		.uleb128 0x1
+ 263 000c C8010000 		.4byte	.LASF26
+ 264 0010 01       		.byte	0x1
+ 265 0011 59000000 		.4byte	.LASF27
+ 266 0015 02010000 		.4byte	.LASF28
+ 267 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 268 001d 00000000 		.4byte	0
+ 269 0021 00000000 		.4byte	.Ldebug_line0
+ 270 0025 02       		.uleb128 0x2
+ 271 0026 01       		.byte	0x1
+ 272 0027 06       		.byte	0x6
+ 273 0028 D2000000 		.4byte	.LASF0
+ 274 002c 02       		.uleb128 0x2
+ 275 002d 01       		.byte	0x1
+ 276 002e 08       		.byte	0x8
+ 277 002f C4000000 		.4byte	.LASF1
+ 278 0033 02       		.uleb128 0x2
+ 279 0034 02       		.byte	0x2
+ 280 0035 05       		.byte	0x5
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 14
+
+
+ 281 0036 25000000 		.4byte	.LASF2
+ 282 003a 02       		.uleb128 0x2
+ 283 003b 02       		.byte	0x2
+ 284 003c 07       		.byte	0x7
+ 285 003d 75010000 		.4byte	.LASF3
+ 286 0041 02       		.uleb128 0x2
+ 287 0042 04       		.byte	0x4
+ 288 0043 05       		.byte	0x5
+ 289 0044 BB000000 		.4byte	.LASF4
+ 290 0048 02       		.uleb128 0x2
+ 291 0049 04       		.byte	0x4
+ 292 004a 07       		.byte	0x7
+ 293 004b 68020000 		.4byte	.LASF5
+ 294 004f 02       		.uleb128 0x2
+ 295 0050 08       		.byte	0x8
+ 296 0051 05       		.byte	0x5
+ 297 0052 AD000000 		.4byte	.LASF6
+ 298 0056 02       		.uleb128 0x2
+ 299 0057 08       		.byte	0x8
+ 300 0058 07       		.byte	0x7
+ 301 0059 DE000000 		.4byte	.LASF7
+ 302 005d 03       		.uleb128 0x3
+ 303 005e 04       		.byte	0x4
+ 304 005f 05       		.byte	0x5
+ 305 0060 696E7400 		.ascii	"int\000"
+ 306 0064 02       		.uleb128 0x2
+ 307 0065 04       		.byte	0x4
+ 308 0066 07       		.byte	0x7
+ 309 0067 F5000000 		.4byte	.LASF8
+ 310 006b 04       		.uleb128 0x4
+ 311 006c 92000000 		.4byte	.LASF9
+ 312 0070 03       		.byte	0x3
+ 313 0071 B901     		.2byte	0x1b9
+ 314 0073 2C000000 		.4byte	0x2c
+ 315 0077 04       		.uleb128 0x4
+ 316 0078 61020000 		.4byte	.LASF10
+ 317 007c 03       		.byte	0x3
+ 318 007d BB01     		.2byte	0x1bb
+ 319 007f 48000000 		.4byte	0x48
+ 320 0083 04       		.uleb128 0x4
+ 321 0084 7A020000 		.4byte	.LASF11
+ 322 0088 03       		.byte	0x3
+ 323 0089 BE01     		.2byte	0x1be
+ 324 008b 41000000 		.4byte	0x41
+ 325 008f 02       		.uleb128 0x2
+ 326 0090 04       		.byte	0x4
+ 327 0091 04       		.byte	0x4
+ 328 0092 A7000000 		.4byte	.LASF12
+ 329 0096 02       		.uleb128 0x2
+ 330 0097 08       		.byte	0x8
+ 331 0098 04       		.byte	0x4
+ 332 0099 80020000 		.4byte	.LASF13
+ 333 009d 02       		.uleb128 0x2
+ 334 009e 01       		.byte	0x1
+ 335 009f 08       		.byte	0x8
+ 336 00a0 AB010000 		.4byte	.LASF14
+ 337 00a4 05       		.uleb128 0x5
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 15
+
+
+ 338 00a5 80       		.byte	0x80
+ 339 00a6 04       		.byte	0x4
+ 340 00a7 26       		.byte	0x26
+ 341 00a8 B9000000 		.4byte	0xb9
+ 342 00ac 06       		.uleb128 0x6
+ 343 00ad 63746C00 		.ascii	"ctl\000"
+ 344 00b1 04       		.byte	0x4
+ 345 00b2 28       		.byte	0x28
+ 346 00b3 B9000000 		.4byte	0xb9
+ 347 00b7 00       		.byte	0
+ 348 00b8 00       		.byte	0
+ 349 00b9 07       		.uleb128 0x7
+ 350 00ba 77000000 		.4byte	0x77
+ 351 00be C9000000 		.4byte	0xc9
+ 352 00c2 08       		.uleb128 0x8
+ 353 00c3 C9000000 		.4byte	0xc9
+ 354 00c7 1F       		.byte	0x1f
+ 355 00c8 00       		.byte	0
+ 356 00c9 02       		.uleb128 0x2
+ 357 00ca 04       		.byte	0x4
+ 358 00cb 07       		.byte	0x7
+ 359 00cc 44000000 		.4byte	.LASF15
+ 360 00d0 09       		.uleb128 0x9
+ 361 00d1 79000000 		.4byte	.LASF16
+ 362 00d5 04       		.byte	0x4
+ 363 00d6 29       		.byte	0x29
+ 364 00d7 A4000000 		.4byte	0xa4
+ 365 00db 05       		.uleb128 0x5
+ 366 00dc 10       		.byte	0x10
+ 367 00dd 04       		.byte	0x4
+ 368 00de 2C       		.byte	0x2c
+ 369 00df 14010000 		.4byte	0x114
+ 370 00e3 06       		.uleb128 0x6
+ 371 00e4 73726300 		.ascii	"src\000"
+ 372 00e8 04       		.byte	0x4
+ 373 00e9 2E       		.byte	0x2e
+ 374 00ea 14010000 		.4byte	0x114
+ 375 00ee 00       		.byte	0
+ 376 00ef 06       		.uleb128 0x6
+ 377 00f0 64737400 		.ascii	"dst\000"
+ 378 00f4 04       		.byte	0x4
+ 379 00f5 2F       		.byte	0x2f
+ 380 00f6 14010000 		.4byte	0x114
+ 381 00fa 04       		.byte	0x4
+ 382 00fb 06       		.uleb128 0x6
+ 383 00fc 63746C00 		.ascii	"ctl\000"
+ 384 0100 04       		.byte	0x4
+ 385 0101 30       		.byte	0x30
+ 386 0102 77000000 		.4byte	0x77
+ 387 0106 08       		.byte	0x8
+ 388 0107 0A       		.uleb128 0xa
+ 389 0108 88010000 		.4byte	.LASF17
+ 390 010c 04       		.byte	0x4
+ 391 010d 31       		.byte	0x31
+ 392 010e 77000000 		.4byte	0x77
+ 393 0112 0C       		.byte	0xc
+ 394 0113 00       		.byte	0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 16
+
+
+ 395 0114 0B       		.uleb128 0xb
+ 396 0115 04       		.byte	0x4
+ 397 0116 09       		.uleb128 0x9
+ 398 0117 B0010000 		.4byte	.LASF18
+ 399 011b 04       		.byte	0x4
+ 400 011c 32       		.byte	0x32
+ 401 011d DB000000 		.4byte	0xdb
+ 402 0121 0C       		.uleb128 0xc
+ 403 0122 0004     		.2byte	0x400
+ 404 0124 04       		.byte	0x4
+ 405 0125 38       		.byte	0x38
+ 406 0126 37010000 		.4byte	0x137
+ 407 012a 0A       		.uleb128 0xa
+ 408 012b A9020000 		.4byte	.LASF19
+ 409 012f 04       		.byte	0x4
+ 410 0130 3A       		.byte	0x3a
+ 411 0131 37010000 		.4byte	0x137
+ 412 0135 00       		.byte	0
+ 413 0136 00       		.byte	0
+ 414 0137 07       		.uleb128 0x7
+ 415 0138 16010000 		.4byte	0x116
+ 416 013c 4D010000 		.4byte	0x14d
+ 417 0140 08       		.uleb128 0x8
+ 418 0141 C9000000 		.4byte	0xc9
+ 419 0145 1F       		.byte	0x1f
+ 420 0146 08       		.uleb128 0x8
+ 421 0147 C9000000 		.4byte	0xc9
+ 422 014b 01       		.byte	0x1
+ 423 014c 00       		.byte	0
+ 424 014d 09       		.uleb128 0x9
+ 425 014e 8F010000 		.4byte	.LASF20
+ 426 0152 04       		.byte	0x4
+ 427 0153 3B       		.byte	0x3b
+ 428 0154 21010000 		.4byte	0x121
+ 429 0158 0D       		.uleb128 0xd
+ 430 0159 65010000 		.4byte	.LASF29
+ 431 015d 01       		.byte	0x1
+ 432 015e 5E       		.byte	0x5e
+ 433 015f 00000000 		.4byte	.LFB0
+ 434 0163 0E000000 		.4byte	.LFE0-.LFB0
+ 435 0167 01       		.uleb128 0x1
+ 436 0168 9C       		.byte	0x9c
+ 437 0169 0E       		.uleb128 0xe
+ 438 016a 0B000000 		.4byte	.LASF21
+ 439 016e 01       		.byte	0x1
+ 440 016f 1501     		.2byte	0x115
+ 441 0171 00000000 		.4byte	.LFB8
+ 442 0175 18000000 		.4byte	.LFE8-.LFB8
+ 443 0179 01       		.uleb128 0x1
+ 444 017a 9C       		.byte	0x9c
+ 445 017b 8F010000 		.4byte	0x18f
+ 446 017f 0F       		.uleb128 0xf
+ 447 0180 A9020000 		.4byte	.LASF19
+ 448 0184 01       		.byte	0x1
+ 449 0185 1501     		.2byte	0x115
+ 450 0187 83000000 		.4byte	0x83
+ 451 018b 02       		.uleb128 0x2
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 17
+
+
+ 452 018c 91       		.byte	0x91
+ 453 018d 74       		.sleb128 -12
+ 454 018e 00       		.byte	0
+ 455 018f 0E       		.uleb128 0xe
+ 456 0190 94020000 		.4byte	.LASF22
+ 457 0194 01       		.byte	0x1
+ 458 0195 4401     		.2byte	0x144
+ 459 0197 00000000 		.4byte	.LFB10
+ 460 019b 1E000000 		.4byte	.LFE10-.LFB10
+ 461 019f 01       		.uleb128 0x1
+ 462 01a0 9C       		.byte	0x9c
+ 463 01a1 C4010000 		.4byte	0x1c4
+ 464 01a5 0F       		.uleb128 0xf
+ 465 01a6 A9020000 		.4byte	.LASF19
+ 466 01aa 01       		.byte	0x1
+ 467 01ab 4401     		.2byte	0x144
+ 468 01ad 83000000 		.4byte	0x83
+ 469 01b1 02       		.uleb128 0x2
+ 470 01b2 91       		.byte	0x91
+ 471 01b3 74       		.sleb128 -12
+ 472 01b4 0F       		.uleb128 0xf
+ 473 01b5 56020000 		.4byte	.LASF23
+ 474 01b9 01       		.byte	0x1
+ 475 01ba 4401     		.2byte	0x144
+ 476 01bc 14010000 		.4byte	0x114
+ 477 01c0 02       		.uleb128 0x2
+ 478 01c1 91       		.byte	0x91
+ 479 01c2 70       		.sleb128 -16
+ 480 01c3 00       		.byte	0
+ 481 01c4 0E       		.uleb128 0xe
+ 482 01c5 2F000000 		.4byte	.LASF24
+ 483 01c9 01       		.byte	0x1
+ 484 01ca 7201     		.2byte	0x172
+ 485 01cc 00000000 		.4byte	.LFB12
+ 486 01d0 1E000000 		.4byte	.LFE12-.LFB12
+ 487 01d4 01       		.uleb128 0x1
+ 488 01d5 9C       		.byte	0x9c
+ 489 01d6 F9010000 		.4byte	0x1f9
+ 490 01da 0F       		.uleb128 0xf
+ 491 01db A9020000 		.4byte	.LASF19
+ 492 01df 01       		.byte	0x1
+ 493 01e0 7201     		.2byte	0x172
+ 494 01e2 83000000 		.4byte	0x83
+ 495 01e6 02       		.uleb128 0x2
+ 496 01e7 91       		.byte	0x91
+ 497 01e8 74       		.sleb128 -12
+ 498 01e9 0F       		.uleb128 0xf
+ 499 01ea 00000000 		.4byte	.LASF25
+ 500 01ee 01       		.byte	0x1
+ 501 01ef 7201     		.2byte	0x172
+ 502 01f1 14010000 		.4byte	0x114
+ 503 01f5 02       		.uleb128 0x2
+ 504 01f6 91       		.byte	0x91
+ 505 01f7 70       		.sleb128 -16
+ 506 01f8 00       		.byte	0
+ 507 01f9 10       		.uleb128 0x10
+ 508 01fa 87020000 		.4byte	.LASF30
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 18
+
+
+ 509 01fe 02       		.byte	0x2
+ 510 01ff 27       		.byte	0x27
+ 511 0200 00000000 		.4byte	.LFB32
+ 512 0204 48000000 		.4byte	.LFE32-.LFB32
+ 513 0208 01       		.uleb128 0x1
+ 514 0209 9C       		.byte	0x9c
+ 515 020a 2B020000 		.4byte	0x22b
+ 516 020e 11       		.uleb128 0x11
+ 517 020f 56020000 		.4byte	.LASF23
+ 518 0213 02       		.byte	0x2
+ 519 0214 27       		.byte	0x27
+ 520 0215 14010000 		.4byte	0x114
+ 521 0219 02       		.uleb128 0x2
+ 522 021a 91       		.byte	0x91
+ 523 021b 74       		.sleb128 -12
+ 524 021c 11       		.uleb128 0x11
+ 525 021d 00000000 		.4byte	.LASF25
+ 526 0221 02       		.byte	0x2
+ 527 0222 27       		.byte	0x27
+ 528 0223 14010000 		.4byte	0x114
+ 529 0227 02       		.uleb128 0x2
+ 530 0228 91       		.byte	0x91
+ 531 0229 70       		.sleb128 -16
+ 532 022a 00       		.byte	0
+ 533 022b 12       		.uleb128 0x12
+ 534 022c 4D000000 		.4byte	.LASF31
+ 535 0230 02       		.byte	0x2
+ 536 0231 4C       		.byte	0x4c
+ 537 0232 00000000 		.4byte	.LFB33
+ 538 0236 28000000 		.4byte	.LFE33-.LFB33
+ 539 023a 01       		.uleb128 0x1
+ 540 023b 9C       		.byte	0x9c
+ 541 023c 13       		.uleb128 0x13
+ 542 023d 98000000 		.4byte	.LASF32
+ 543 0241 02       		.byte	0x2
+ 544 0242 11       		.byte	0x11
+ 545 0243 6B000000 		.4byte	0x6b
+ 546 0247 05       		.uleb128 0x5
+ 547 0248 03       		.byte	0x3
+ 548 0249 00000000 		.4byte	TxDmaS_initVar
+ 549 024d 00       		.byte	0
+ 550              		.section	.debug_abbrev,"",%progbits
+ 551              	.Ldebug_abbrev0:
+ 552 0000 01       		.uleb128 0x1
+ 553 0001 11       		.uleb128 0x11
+ 554 0002 01       		.byte	0x1
+ 555 0003 25       		.uleb128 0x25
+ 556 0004 0E       		.uleb128 0xe
+ 557 0005 13       		.uleb128 0x13
+ 558 0006 0B       		.uleb128 0xb
+ 559 0007 03       		.uleb128 0x3
+ 560 0008 0E       		.uleb128 0xe
+ 561 0009 1B       		.uleb128 0x1b
+ 562 000a 0E       		.uleb128 0xe
+ 563 000b 55       		.uleb128 0x55
+ 564 000c 17       		.uleb128 0x17
+ 565 000d 11       		.uleb128 0x11
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 19
+
+
+ 566 000e 01       		.uleb128 0x1
+ 567 000f 10       		.uleb128 0x10
+ 568 0010 17       		.uleb128 0x17
+ 569 0011 00       		.byte	0
+ 570 0012 00       		.byte	0
+ 571 0013 02       		.uleb128 0x2
+ 572 0014 24       		.uleb128 0x24
+ 573 0015 00       		.byte	0
+ 574 0016 0B       		.uleb128 0xb
+ 575 0017 0B       		.uleb128 0xb
+ 576 0018 3E       		.uleb128 0x3e
+ 577 0019 0B       		.uleb128 0xb
+ 578 001a 03       		.uleb128 0x3
+ 579 001b 0E       		.uleb128 0xe
+ 580 001c 00       		.byte	0
+ 581 001d 00       		.byte	0
+ 582 001e 03       		.uleb128 0x3
+ 583 001f 24       		.uleb128 0x24
+ 584 0020 00       		.byte	0
+ 585 0021 0B       		.uleb128 0xb
+ 586 0022 0B       		.uleb128 0xb
+ 587 0023 3E       		.uleb128 0x3e
+ 588 0024 0B       		.uleb128 0xb
+ 589 0025 03       		.uleb128 0x3
+ 590 0026 08       		.uleb128 0x8
+ 591 0027 00       		.byte	0
+ 592 0028 00       		.byte	0
+ 593 0029 04       		.uleb128 0x4
+ 594 002a 16       		.uleb128 0x16
+ 595 002b 00       		.byte	0
+ 596 002c 03       		.uleb128 0x3
+ 597 002d 0E       		.uleb128 0xe
+ 598 002e 3A       		.uleb128 0x3a
+ 599 002f 0B       		.uleb128 0xb
+ 600 0030 3B       		.uleb128 0x3b
+ 601 0031 05       		.uleb128 0x5
+ 602 0032 49       		.uleb128 0x49
+ 603 0033 13       		.uleb128 0x13
+ 604 0034 00       		.byte	0
+ 605 0035 00       		.byte	0
+ 606 0036 05       		.uleb128 0x5
+ 607 0037 13       		.uleb128 0x13
+ 608 0038 01       		.byte	0x1
+ 609 0039 0B       		.uleb128 0xb
+ 610 003a 0B       		.uleb128 0xb
+ 611 003b 3A       		.uleb128 0x3a
+ 612 003c 0B       		.uleb128 0xb
+ 613 003d 3B       		.uleb128 0x3b
+ 614 003e 0B       		.uleb128 0xb
+ 615 003f 01       		.uleb128 0x1
+ 616 0040 13       		.uleb128 0x13
+ 617 0041 00       		.byte	0
+ 618 0042 00       		.byte	0
+ 619 0043 06       		.uleb128 0x6
+ 620 0044 0D       		.uleb128 0xd
+ 621 0045 00       		.byte	0
+ 622 0046 03       		.uleb128 0x3
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 20
+
+
+ 623 0047 08       		.uleb128 0x8
+ 624 0048 3A       		.uleb128 0x3a
+ 625 0049 0B       		.uleb128 0xb
+ 626 004a 3B       		.uleb128 0x3b
+ 627 004b 0B       		.uleb128 0xb
+ 628 004c 49       		.uleb128 0x49
+ 629 004d 13       		.uleb128 0x13
+ 630 004e 38       		.uleb128 0x38
+ 631 004f 0B       		.uleb128 0xb
+ 632 0050 00       		.byte	0
+ 633 0051 00       		.byte	0
+ 634 0052 07       		.uleb128 0x7
+ 635 0053 01       		.uleb128 0x1
+ 636 0054 01       		.byte	0x1
+ 637 0055 49       		.uleb128 0x49
+ 638 0056 13       		.uleb128 0x13
+ 639 0057 01       		.uleb128 0x1
+ 640 0058 13       		.uleb128 0x13
+ 641 0059 00       		.byte	0
+ 642 005a 00       		.byte	0
+ 643 005b 08       		.uleb128 0x8
+ 644 005c 21       		.uleb128 0x21
+ 645 005d 00       		.byte	0
+ 646 005e 49       		.uleb128 0x49
+ 647 005f 13       		.uleb128 0x13
+ 648 0060 2F       		.uleb128 0x2f
+ 649 0061 0B       		.uleb128 0xb
+ 650 0062 00       		.byte	0
+ 651 0063 00       		.byte	0
+ 652 0064 09       		.uleb128 0x9
+ 653 0065 16       		.uleb128 0x16
+ 654 0066 00       		.byte	0
+ 655 0067 03       		.uleb128 0x3
+ 656 0068 0E       		.uleb128 0xe
+ 657 0069 3A       		.uleb128 0x3a
+ 658 006a 0B       		.uleb128 0xb
+ 659 006b 3B       		.uleb128 0x3b
+ 660 006c 0B       		.uleb128 0xb
+ 661 006d 49       		.uleb128 0x49
+ 662 006e 13       		.uleb128 0x13
+ 663 006f 00       		.byte	0
+ 664 0070 00       		.byte	0
+ 665 0071 0A       		.uleb128 0xa
+ 666 0072 0D       		.uleb128 0xd
+ 667 0073 00       		.byte	0
+ 668 0074 03       		.uleb128 0x3
+ 669 0075 0E       		.uleb128 0xe
+ 670 0076 3A       		.uleb128 0x3a
+ 671 0077 0B       		.uleb128 0xb
+ 672 0078 3B       		.uleb128 0x3b
+ 673 0079 0B       		.uleb128 0xb
+ 674 007a 49       		.uleb128 0x49
+ 675 007b 13       		.uleb128 0x13
+ 676 007c 38       		.uleb128 0x38
+ 677 007d 0B       		.uleb128 0xb
+ 678 007e 00       		.byte	0
+ 679 007f 00       		.byte	0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 21
+
+
+ 680 0080 0B       		.uleb128 0xb
+ 681 0081 0F       		.uleb128 0xf
+ 682 0082 00       		.byte	0
+ 683 0083 0B       		.uleb128 0xb
+ 684 0084 0B       		.uleb128 0xb
+ 685 0085 00       		.byte	0
+ 686 0086 00       		.byte	0
+ 687 0087 0C       		.uleb128 0xc
+ 688 0088 13       		.uleb128 0x13
+ 689 0089 01       		.byte	0x1
+ 690 008a 0B       		.uleb128 0xb
+ 691 008b 05       		.uleb128 0x5
+ 692 008c 3A       		.uleb128 0x3a
+ 693 008d 0B       		.uleb128 0xb
+ 694 008e 3B       		.uleb128 0x3b
+ 695 008f 0B       		.uleb128 0xb
+ 696 0090 01       		.uleb128 0x1
+ 697 0091 13       		.uleb128 0x13
+ 698 0092 00       		.byte	0
+ 699 0093 00       		.byte	0
+ 700 0094 0D       		.uleb128 0xd
+ 701 0095 2E       		.uleb128 0x2e
+ 702 0096 00       		.byte	0
+ 703 0097 03       		.uleb128 0x3
+ 704 0098 0E       		.uleb128 0xe
+ 705 0099 3A       		.uleb128 0x3a
+ 706 009a 0B       		.uleb128 0xb
+ 707 009b 3B       		.uleb128 0x3b
+ 708 009c 0B       		.uleb128 0xb
+ 709 009d 27       		.uleb128 0x27
+ 710 009e 19       		.uleb128 0x19
+ 711 009f 11       		.uleb128 0x11
+ 712 00a0 01       		.uleb128 0x1
+ 713 00a1 12       		.uleb128 0x12
+ 714 00a2 06       		.uleb128 0x6
+ 715 00a3 40       		.uleb128 0x40
+ 716 00a4 18       		.uleb128 0x18
+ 717 00a5 9642     		.uleb128 0x2116
+ 718 00a7 19       		.uleb128 0x19
+ 719 00a8 00       		.byte	0
+ 720 00a9 00       		.byte	0
+ 721 00aa 0E       		.uleb128 0xe
+ 722 00ab 2E       		.uleb128 0x2e
+ 723 00ac 01       		.byte	0x1
+ 724 00ad 03       		.uleb128 0x3
+ 725 00ae 0E       		.uleb128 0xe
+ 726 00af 3A       		.uleb128 0x3a
+ 727 00b0 0B       		.uleb128 0xb
+ 728 00b1 3B       		.uleb128 0x3b
+ 729 00b2 05       		.uleb128 0x5
+ 730 00b3 27       		.uleb128 0x27
+ 731 00b4 19       		.uleb128 0x19
+ 732 00b5 11       		.uleb128 0x11
+ 733 00b6 01       		.uleb128 0x1
+ 734 00b7 12       		.uleb128 0x12
+ 735 00b8 06       		.uleb128 0x6
+ 736 00b9 40       		.uleb128 0x40
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 22
+
+
+ 737 00ba 18       		.uleb128 0x18
+ 738 00bb 9642     		.uleb128 0x2116
+ 739 00bd 19       		.uleb128 0x19
+ 740 00be 01       		.uleb128 0x1
+ 741 00bf 13       		.uleb128 0x13
+ 742 00c0 00       		.byte	0
+ 743 00c1 00       		.byte	0
+ 744 00c2 0F       		.uleb128 0xf
+ 745 00c3 05       		.uleb128 0x5
+ 746 00c4 00       		.byte	0
+ 747 00c5 03       		.uleb128 0x3
+ 748 00c6 0E       		.uleb128 0xe
+ 749 00c7 3A       		.uleb128 0x3a
+ 750 00c8 0B       		.uleb128 0xb
+ 751 00c9 3B       		.uleb128 0x3b
+ 752 00ca 05       		.uleb128 0x5
+ 753 00cb 49       		.uleb128 0x49
+ 754 00cc 13       		.uleb128 0x13
+ 755 00cd 02       		.uleb128 0x2
+ 756 00ce 18       		.uleb128 0x18
+ 757 00cf 00       		.byte	0
+ 758 00d0 00       		.byte	0
+ 759 00d1 10       		.uleb128 0x10
+ 760 00d2 2E       		.uleb128 0x2e
+ 761 00d3 01       		.byte	0x1
+ 762 00d4 3F       		.uleb128 0x3f
+ 763 00d5 19       		.uleb128 0x19
+ 764 00d6 03       		.uleb128 0x3
+ 765 00d7 0E       		.uleb128 0xe
+ 766 00d8 3A       		.uleb128 0x3a
+ 767 00d9 0B       		.uleb128 0xb
+ 768 00da 3B       		.uleb128 0x3b
+ 769 00db 0B       		.uleb128 0xb
+ 770 00dc 27       		.uleb128 0x27
+ 771 00dd 19       		.uleb128 0x19
+ 772 00de 11       		.uleb128 0x11
+ 773 00df 01       		.uleb128 0x1
+ 774 00e0 12       		.uleb128 0x12
+ 775 00e1 06       		.uleb128 0x6
+ 776 00e2 40       		.uleb128 0x40
+ 777 00e3 18       		.uleb128 0x18
+ 778 00e4 9642     		.uleb128 0x2116
+ 779 00e6 19       		.uleb128 0x19
+ 780 00e7 01       		.uleb128 0x1
+ 781 00e8 13       		.uleb128 0x13
+ 782 00e9 00       		.byte	0
+ 783 00ea 00       		.byte	0
+ 784 00eb 11       		.uleb128 0x11
+ 785 00ec 05       		.uleb128 0x5
+ 786 00ed 00       		.byte	0
+ 787 00ee 03       		.uleb128 0x3
+ 788 00ef 0E       		.uleb128 0xe
+ 789 00f0 3A       		.uleb128 0x3a
+ 790 00f1 0B       		.uleb128 0xb
+ 791 00f2 3B       		.uleb128 0x3b
+ 792 00f3 0B       		.uleb128 0xb
+ 793 00f4 49       		.uleb128 0x49
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 23
+
+
+ 794 00f5 13       		.uleb128 0x13
+ 795 00f6 02       		.uleb128 0x2
+ 796 00f7 18       		.uleb128 0x18
+ 797 00f8 00       		.byte	0
+ 798 00f9 00       		.byte	0
+ 799 00fa 12       		.uleb128 0x12
+ 800 00fb 2E       		.uleb128 0x2e
+ 801 00fc 00       		.byte	0
+ 802 00fd 3F       		.uleb128 0x3f
+ 803 00fe 19       		.uleb128 0x19
+ 804 00ff 03       		.uleb128 0x3
+ 805 0100 0E       		.uleb128 0xe
+ 806 0101 3A       		.uleb128 0x3a
+ 807 0102 0B       		.uleb128 0xb
+ 808 0103 3B       		.uleb128 0x3b
+ 809 0104 0B       		.uleb128 0xb
+ 810 0105 27       		.uleb128 0x27
+ 811 0106 19       		.uleb128 0x19
+ 812 0107 11       		.uleb128 0x11
+ 813 0108 01       		.uleb128 0x1
+ 814 0109 12       		.uleb128 0x12
+ 815 010a 06       		.uleb128 0x6
+ 816 010b 40       		.uleb128 0x40
+ 817 010c 18       		.uleb128 0x18
+ 818 010d 9742     		.uleb128 0x2117
+ 819 010f 19       		.uleb128 0x19
+ 820 0110 00       		.byte	0
+ 821 0111 00       		.byte	0
+ 822 0112 13       		.uleb128 0x13
+ 823 0113 34       		.uleb128 0x34
+ 824 0114 00       		.byte	0
+ 825 0115 03       		.uleb128 0x3
+ 826 0116 0E       		.uleb128 0xe
+ 827 0117 3A       		.uleb128 0x3a
+ 828 0118 0B       		.uleb128 0xb
+ 829 0119 3B       		.uleb128 0x3b
+ 830 011a 0B       		.uleb128 0xb
+ 831 011b 49       		.uleb128 0x49
+ 832 011c 13       		.uleb128 0x13
+ 833 011d 3F       		.uleb128 0x3f
+ 834 011e 19       		.uleb128 0x19
+ 835 011f 02       		.uleb128 0x2
+ 836 0120 18       		.uleb128 0x18
+ 837 0121 00       		.byte	0
+ 838 0122 00       		.byte	0
+ 839 0123 00       		.byte	0
+ 840              		.section	.debug_aranges,"",%progbits
+ 841 0000 44000000 		.4byte	0x44
+ 842 0004 0200     		.2byte	0x2
+ 843 0006 00000000 		.4byte	.Ldebug_info0
+ 844 000a 04       		.byte	0x4
+ 845 000b 00       		.byte	0
+ 846 000c 0000     		.2byte	0
+ 847 000e 0000     		.2byte	0
+ 848 0010 00000000 		.4byte	.LFB0
+ 849 0014 0E000000 		.4byte	.LFE0-.LFB0
+ 850 0018 00000000 		.4byte	.LFB8
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 24
+
+
+ 851 001c 18000000 		.4byte	.LFE8-.LFB8
+ 852 0020 00000000 		.4byte	.LFB10
+ 853 0024 1E000000 		.4byte	.LFE10-.LFB10
+ 854 0028 00000000 		.4byte	.LFB12
+ 855 002c 1E000000 		.4byte	.LFE12-.LFB12
+ 856 0030 00000000 		.4byte	.LFB32
+ 857 0034 48000000 		.4byte	.LFE32-.LFB32
+ 858 0038 00000000 		.4byte	.LFB33
+ 859 003c 28000000 		.4byte	.LFE33-.LFB33
+ 860 0040 00000000 		.4byte	0
+ 861 0044 00000000 		.4byte	0
+ 862              		.section	.debug_ranges,"",%progbits
+ 863              	.Ldebug_ranges0:
+ 864 0000 00000000 		.4byte	.LFB0
+ 865 0004 0E000000 		.4byte	.LFE0
+ 866 0008 00000000 		.4byte	.LFB8
+ 867 000c 18000000 		.4byte	.LFE8
+ 868 0010 00000000 		.4byte	.LFB10
+ 869 0014 1E000000 		.4byte	.LFE10
+ 870 0018 00000000 		.4byte	.LFB12
+ 871 001c 1E000000 		.4byte	.LFE12
+ 872 0020 00000000 		.4byte	.LFB32
+ 873 0024 48000000 		.4byte	.LFE32
+ 874 0028 00000000 		.4byte	.LFB33
+ 875 002c 28000000 		.4byte	.LFE33
+ 876 0030 00000000 		.4byte	0
+ 877 0034 00000000 		.4byte	0
+ 878              		.section	.debug_line,"",%progbits
+ 879              	.Ldebug_line0:
+ 880 0000 D8000000 		.section	.debug_str,"MS",%progbits,1
+ 880      02005A00 
+ 880      00000201 
+ 880      FB0E0D00 
+ 880      01010101 
+ 881              	.LASF25:
+ 882 0000 64737441 		.ascii	"dstAddress\000"
+ 882      64647265 
+ 882      737300
+ 883              	.LASF21:
+ 884 000b 5478446D 		.ascii	"TxDmaS_ValidateDescriptor\000"
+ 884      61535F56 
+ 884      616C6964 
+ 884      61746544 
+ 884      65736372 
+ 885              	.LASF2:
+ 886 0025 73686F72 		.ascii	"short int\000"
+ 886      7420696E 
+ 886      7400
+ 887              	.LASF24:
+ 888 002f 5478446D 		.ascii	"TxDmaS_SetDstAddress\000"
+ 888      61535F53 
+ 888      65744473 
+ 888      74416464 
+ 888      72657373 
+ 889              	.LASF15:
+ 890 0044 73697A65 		.ascii	"sizetype\000"
+ 890      74797065 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 25
+
+
+ 890      00
+ 891              	.LASF31:
+ 892 004d 5478446D 		.ascii	"TxDmaS_Init\000"
+ 892      61535F49 
+ 892      6E697400 
+ 893              	.LASF27:
+ 894 0059 47656E65 		.ascii	"Generated_Source\\PSoC4\\TxDmaS.c\000"
+ 894      72617465 
+ 894      645F536F 
+ 894      75726365 
+ 894      5C50536F 
+ 895              	.LASF16:
+ 896 0079 6379646D 		.ascii	"cydma_channel_ctl_struct\000"
+ 896      615F6368 
+ 896      616E6E65 
+ 896      6C5F6374 
+ 896      6C5F7374 
+ 897              	.LASF9:
+ 898 0092 75696E74 		.ascii	"uint8\000"
+ 898      3800
+ 899              	.LASF32:
+ 900 0098 5478446D 		.ascii	"TxDmaS_initVar\000"
+ 900      61535F69 
+ 900      6E697456 
+ 900      617200
+ 901              	.LASF12:
+ 902 00a7 666C6F61 		.ascii	"float\000"
+ 902      7400
+ 903              	.LASF6:
+ 904 00ad 6C6F6E67 		.ascii	"long long int\000"
+ 904      206C6F6E 
+ 904      6720696E 
+ 904      7400
+ 905              	.LASF4:
+ 906 00bb 6C6F6E67 		.ascii	"long int\000"
+ 906      20696E74 
+ 906      00
+ 907              	.LASF1:
+ 908 00c4 756E7369 		.ascii	"unsigned char\000"
+ 908      676E6564 
+ 908      20636861 
+ 908      7200
+ 909              	.LASF0:
+ 910 00d2 7369676E 		.ascii	"signed char\000"
+ 910      65642063 
+ 910      68617200 
+ 911              	.LASF7:
+ 912 00de 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 912      206C6F6E 
+ 912      6720756E 
+ 912      7369676E 
+ 912      65642069 
+ 913              	.LASF8:
+ 914 00f5 756E7369 		.ascii	"unsigned int\000"
+ 914      676E6564 
+ 914      20696E74 
+ 914      00
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 26
+
+
+ 915              	.LASF28:
+ 916 0102 443A5C44 		.ascii	"D:\\Dropbox\\IoT Development\\Cypress PSoC Developm"
+ 916      726F7062 
+ 916      6F785C49 
+ 916      6F542044 
+ 916      6576656C 
+ 917 0132 656E745C 		.ascii	"ent\\ISMART-CY8CKIT-046-04\\SCB_SpiCommSlave01.cyds"
+ 917      49534D41 
+ 917      52542D43 
+ 917      5938434B 
+ 917      49542D30 
+ 918 0163 6E00     		.ascii	"n\000"
+ 919              	.LASF29:
+ 920 0165 5478446D 		.ascii	"TxDmaS_ChEnable\000"
+ 920      61535F43 
+ 920      68456E61 
+ 920      626C6500 
+ 921              	.LASF3:
+ 922 0175 73686F72 		.ascii	"short unsigned int\000"
+ 922      7420756E 
+ 922      7369676E 
+ 922      65642069 
+ 922      6E7400
+ 923              	.LASF17:
+ 924 0188 73746174 		.ascii	"status\000"
+ 924      757300
+ 925              	.LASF20:
+ 926 018f 6379646D 		.ascii	"cydma_descriptor_ram_struct\000"
+ 926      615F6465 
+ 926      73637269 
+ 926      70746F72 
+ 926      5F72616D 
+ 927              	.LASF14:
+ 928 01ab 63686172 		.ascii	"char\000"
+ 928      00
+ 929              	.LASF18:
+ 930 01b0 6379646D 		.ascii	"cydma_descriptor_struct\000"
+ 930      615F6465 
+ 930      73637269 
+ 930      70746F72 
+ 930      5F737472 
+ 931              	.LASF26:
+ 932 01c8 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 932      4320342E 
+ 932      392E3320 
+ 932      32303135 
+ 932      30333033 
+ 933 01fb 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 933      20726576 
+ 933      6973696F 
+ 933      6E203232 
+ 933      31323230 
+ 934 022e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 934      66756E63 
+ 934      74696F6E 
+ 934      2D736563 
+ 934      74696F6E 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccBtfcEa.s 			page 27
+
+
+ 935              	.LASF23:
+ 936 0256 73726341 		.ascii	"srcAddress\000"
+ 936      64647265 
+ 936      737300
+ 937              	.LASF10:
+ 938 0261 75696E74 		.ascii	"uint32\000"
+ 938      333200
+ 939              	.LASF5:
+ 940 0268 6C6F6E67 		.ascii	"long unsigned int\000"
+ 940      20756E73 
+ 940      69676E65 
+ 940      6420696E 
+ 940      7400
+ 941              	.LASF11:
+ 942 027a 696E7433 		.ascii	"int32\000"
+ 942      3200
+ 943              	.LASF13:
+ 944 0280 646F7562 		.ascii	"double\000"
+ 944      6C6500
+ 945              	.LASF30:
+ 946 0287 5478446D 		.ascii	"TxDmaS_Start\000"
+ 946      61535F53 
+ 946      74617274 
+ 946      00
+ 947              	.LASF22:
+ 948 0294 5478446D 		.ascii	"TxDmaS_SetSrcAddress\000"
+ 948      61535F53 
+ 948      65745372 
+ 948      63416464 
+ 948      72657373 
+ 949              	.LASF19:
+ 950 02a9 64657363 		.ascii	"descriptor\000"
+ 950      72697074 
+ 950      6F7200
+ 951              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

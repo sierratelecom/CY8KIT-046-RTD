@@ -1,0 +1,10 @@
+--------------- Build Started: 05/04/2017 12:34:39 Project: SCB_SpiCommSlave01, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+Initializing Build...
+cydsfit.exe -.appdatapath "C:\Users\greg.phillips\AppData\Local\Cypress Semiconductor\PSoC Creator\4.0" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p "D:\Dropbox\IoT Development\Cypress PSoC Development\ISMART-CY8CKIT-046-04\SCB_SpiCommSlave01.cydsn\SCB_SpiCommSlave01.cyprj" -d CY8C4124AZI-S413 -s "D:\Dropbox\IoT Development\Cypress PSoC Development\ISMART-CY8CKIT-046-04\SCB_SpiCommSlave01.cydsn\Generated_Source\PSoC4" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+ADD: sdb.M0059: error: Error in component: IDAC. The IDAC_P4_v1_10 component (IDAC) is not compatible with the selected device. Please check the component datasheet for details on updating to a compatible component.
+ * D:\Dropbox\IoT Development\Cypress PSoC Development\ISMART-CY8CKIT-046-04\SCB_SpiCommSlave01.cydsn\TopDesign\TopDesign.cysch (Instance:IDAC)
+ADD: sdb.M0059: error: Error in component: ADC_SAR_SEQ. The selected type of voltage reference is not supported for the current device type.
+ * D:\Dropbox\IoT Development\Cypress PSoC Development\ISMART-CY8CKIT-046-04\SCB_SpiCommSlave01.cydsn\TopDesign\TopDesign.cysch (Instance:ADC_SAR_SEQ)
+Error: fit.M0050: The fitter aborted due to errors, please address all errors and rebuild. (App=cydsfit)
+--------------- Build Failed: 05/04/2017 12:34:43 ---------------

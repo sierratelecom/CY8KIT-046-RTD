@@ -1,0 +1,786 @@
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"switch_sensor.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global _printf_float
+  18              		.code	16
+  19              		.comm	switch_state,4,4
+  20              		.section	.text.init_switch,"ax",%progbits
+  21              		.align	2
+  22              		.global	init_switch
+  23              		.code	16
+  24              		.thumb_func
+  25              		.type	init_switch, %function
+  26              	init_switch:
+  27              	.LFB36:
+  28              		.file 1 "switch_sensor.c"
+   1:switch_sensor.c **** /*
+   2:switch_sensor.c ****  * Copyright 2017, Sierra Telecom. All Rights Reserved.
+   3:switch_sensor.c ****  *
+   4:switch_sensor.c ****  * This software, associated documentation and materials ("Software"),
+   5:switch_sensor.c ****  * is owned by Sierra Telecom ("Sierra") and is protected by and subject to
+   6:switch_sensor.c ****  * worldwide patent protection (United States and foreign),
+   7:switch_sensor.c ****  * United States copyright laws and international treaty provisions.
+   8:switch_sensor.c ****  * Therefore, you may use this Software only as provided in the license
+   9:switch_sensor.c ****  * agreement accompanying the software package from which you
+  10:switch_sensor.c ****  * obtained this Software ("EULA").
+  11:switch_sensor.c ****  * If no EULA applies, Sierra hereby grants you a personal, non-exclusive,
+  12:switch_sensor.c ****  * non-transferable license to copy, modify, and compile the Software
+  13:switch_sensor.c ****  * source code solely for use in connection with Sierra's
+  14:switch_sensor.c ****  * integrated circuit products. Any reproduction, modification, translation,
+  15:switch_sensor.c ****  * compilation, or representation of this Software except as specified
+  16:switch_sensor.c ****  * above is prohibited without the express written permission of Sierra.
+  17:switch_sensor.c ****  *
+  18:switch_sensor.c ****  * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  19:switch_sensor.c ****  * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  20:switch_sensor.c ****  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Sierra
+  21:switch_sensor.c ****  * reserves the right to make changes to the Software without notice. Sierra
+  22:switch_sensor.c ****  * does not assume any liability arising out of the application or use of the
+  23:switch_sensor.c ****  * Software or any product or circuit described in the Software. Sierra does
+  24:switch_sensor.c ****  * not authorize its products for use in any products where a malfunction or
+  25:switch_sensor.c ****  * failure of the Sierra product may reasonably be expected to result in
+  26:switch_sensor.c ****  * significant property damage, injury or death ("High Risk Product"). By
+  27:switch_sensor.c ****  * including Sierra's product in a High Risk Product, the manufacturer
+  28:switch_sensor.c ****  * of such system or application assumes all risk of such use and in doing
+  29:switch_sensor.c ****  * so agrees to indemnify Sierra against all liability.
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 2
+
+
+  30:switch_sensor.c ****  */
+  31:switch_sensor.c **** /** @file switch_sensor.c
+  32:switch_sensor.c ****  *
+  33:switch_sensor.c ****  *  Created on: April 26, 2017
+  34:switch_sensor.c ****  *      Author: greg.phillips
+  35:switch_sensor.c ****  */
+  36:switch_sensor.c **** 
+  37:switch_sensor.c **** #if defined (__GNUC__)
+  38:switch_sensor.c ****     /* Add an explicit reference to the floating point printf library */
+  39:switch_sensor.c ****     /* to allow the usage of floating point conversion specifiers. */
+  40:switch_sensor.c ****     /* This is not linked in by default with the newlib-nano library. */
+  41:switch_sensor.c ****     asm (".global _printf_float");
+  42:switch_sensor.c **** #endif
+  43:switch_sensor.c **** 
+  44:switch_sensor.c **** 
+  45:switch_sensor.c **** #include <project.h>
+  46:switch_sensor.c **** #include <stdint.h>
+  47:switch_sensor.c **** #include <stdbool.h>
+  48:switch_sensor.c **** #include <stdlib.h>
+  49:switch_sensor.c **** 
+  50:switch_sensor.c **** #include "arduino.h"
+  51:switch_sensor.c **** #include "cypress_arduino.h"
+  52:switch_sensor.c **** #include "leds.h"
+  53:switch_sensor.c **** /******************************************************
+  54:switch_sensor.c ****  *                      Macros
+  55:switch_sensor.c ****  ******************************************************/
+  56:switch_sensor.c **** 
+  57:switch_sensor.c **** /******************************************************
+  58:switch_sensor.c ****  *                    Constants
+  59:switch_sensor.c ****  ******************************************************/
+  60:switch_sensor.c **** 
+  61:switch_sensor.c **** /******************************************************
+  62:switch_sensor.c ****  *                   Enumerations
+  63:switch_sensor.c ****  ******************************************************/
+  64:switch_sensor.c **** enum {
+  65:switch_sensor.c ****     SWITCH_INIT,
+  66:switch_sensor.c ****     MONITOR_SWITCH,
+  67:switch_sensor.c ****     WAIT_TILL_OFF,
+  68:switch_sensor.c **** };
+  69:switch_sensor.c **** /******************************************************
+  70:switch_sensor.c ****  *                 Type Definitions
+  71:switch_sensor.c ****  ******************************************************/
+  72:switch_sensor.c **** 
+  73:switch_sensor.c **** /******************************************************
+  74:switch_sensor.c ****  *                    Structures
+  75:switch_sensor.c ****  ******************************************************/
+  76:switch_sensor.c **** 
+  77:switch_sensor.c **** /******************************************************
+  78:switch_sensor.c ****  *               Function Declarations
+  79:switch_sensor.c ****  ******************************************************/
+  80:switch_sensor.c **** 
+  81:switch_sensor.c **** /******************************************************
+  82:switch_sensor.c ****  *               Variable Definitions
+  83:switch_sensor.c ****  ******************************************************/
+  84:switch_sensor.c **** 
+  85:switch_sensor.c **** /*
+  86:switch_sensor.c ****  * State variable for switch monitor
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 3
+
+
+  87:switch_sensor.c ****  */
+  88:switch_sensor.c **** uint32_t switch_state;
+  89:switch_sensor.c **** /******************************************************
+  90:switch_sensor.c ****  *               Function Definitions
+  91:switch_sensor.c ****  ******************************************************/
+  92:switch_sensor.c **** 
+  93:switch_sensor.c **** /**
+  94:switch_sensor.c ****   * @brief Initialize switch
+  95:switch_sensor.c ****   * @param  None
+  96:switch_sensor.c ****   * @retval : None
+  97:switch_sensor.c ****   */
+  98:switch_sensor.c **** void init_switch(void)
+  99:switch_sensor.c **** {
+  29              		.loc 1 99 0
+  30              		.cfi_startproc
+  31 0000 80B5     		push	{r7, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 7, -8
+  34              		.cfi_offset 14, -4
+  35 0002 00AF     		add	r7, sp, #0
+  36              		.cfi_def_cfa_register 7
+ 100:switch_sensor.c ****     switch_state = SWITCH_INIT;
+  37              		.loc 1 100 0
+  38 0004 024B     		ldr	r3, .L2
+  39 0006 0022     		mov	r2, #0
+  40 0008 1A60     		str	r2, [r3]
+ 101:switch_sensor.c **** }
+  41              		.loc 1 101 0
+  42 000a BD46     		mov	sp, r7
+  43              		@ sp needed
+  44 000c 80BD     		pop	{r7, pc}
+  45              	.L3:
+  46 000e C046     		.align	2
+  47              	.L2:
+  48 0010 00000000 		.word	switch_state
+  49              		.cfi_endproc
+  50              	.LFE36:
+  51              		.size	init_switch, .-init_switch
+  52              		.comm	count,4,4
+  53              		.section	.text.process_switch,"ax",%progbits
+  54              		.align	2
+  55              		.global	process_switch
+  56              		.code	16
+  57              		.thumb_func
+  58              		.type	process_switch, %function
+  59              	process_switch:
+  60              	.LFB37:
+ 102:switch_sensor.c **** 
+ 103:switch_sensor.c **** /**
+ 104:switch_sensor.c ****   * @brief process the switch
+ 105:switch_sensor.c ****   * @param  None
+ 106:switch_sensor.c ****   * @retval : None
+ 107:switch_sensor.c ****   */
+ 108:switch_sensor.c **** uint32_t count;
+ 109:switch_sensor.c **** void process_switch(void)
+ 110:switch_sensor.c **** {
+  61              		.loc 1 110 0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 4
+
+
+  62              		.cfi_startproc
+  63 0000 80B5     		push	{r7, lr}
+  64              		.cfi_def_cfa_offset 8
+  65              		.cfi_offset 7, -8
+  66              		.cfi_offset 14, -4
+  67 0002 00AF     		add	r7, sp, #0
+  68              		.cfi_def_cfa_register 7
+ 111:switch_sensor.c ****    
+ 112:switch_sensor.c ****     switch( switch_state ) {
+  69              		.loc 1 112 0
+  70 0004 234B     		ldr	r3, .L12
+  71 0006 1B68     		ldr	r3, [r3]
+  72 0008 012B     		cmp	r3, #1
+  73 000a 0AD0     		beq	.L6
+  74 000c 02D3     		bcc	.L7
+  75 000e 022B     		cmp	r3, #2
+  76 0010 2AD0     		beq	.L8
+  77 0012 39E0     		b	.L5
+  78              	.L7:
+ 113:switch_sensor.c ****         case SWITCH_INIT :
+ 114:switch_sensor.c ****             /* 
+ 115:switch_sensor.c ****              * Initialize Switch
+ 116:switch_sensor.c ****              */
+ 117:switch_sensor.c ****             switch_state = MONITOR_SWITCH;
+  79              		.loc 1 117 0
+  80 0014 1F4B     		ldr	r3, .L12
+  81 0016 0122     		mov	r2, #1
+  82 0018 1A60     		str	r2, [r3]
+ 118:switch_sensor.c ****             count = 0;
+  83              		.loc 1 118 0
+  84 001a 1F4B     		ldr	r3, .L12+4
+  85 001c 0022     		mov	r2, #0
+  86 001e 1A60     		str	r2, [r3]
+ 119:switch_sensor.c ****             break;
+  87              		.loc 1 119 0
+  88 0020 36E0     		b	.L4
+  89              	.L6:
+ 120:switch_sensor.c ****         case MONITOR_SWITCH :
+ 121:switch_sensor.c ****             count += 1;
+  90              		.loc 1 121 0
+  91 0022 1D4B     		ldr	r3, .L12+4
+  92 0024 1B68     		ldr	r3, [r3]
+  93 0026 5A1C     		add	r2, r3, #1
+  94 0028 1B4B     		ldr	r3, .L12+4
+  95 002a 1A60     		str	r2, [r3]
+ 122:switch_sensor.c ****             if( ( switch_1_Read() == 0 ) || (count > 100000 ) ) {
+  96              		.loc 1 122 0
+  97 002c FFF7FEFF 		bl	switch_1_Read
+  98 0030 031E     		sub	r3, r0, #0
+  99 0032 04D0     		beq	.L10
+ 100              		.loc 1 122 0 is_stmt 0 discriminator 1
+ 101 0034 184B     		ldr	r3, .L12+4
+ 102 0036 1B68     		ldr	r3, [r3]
+ 103 0038 184A     		ldr	r2, .L12+8
+ 104 003a 9342     		cmp	r3, r2
+ 105 003c 13D9     		bls	.L11
+ 106              	.L10:
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 5
+
+
+ 123:switch_sensor.c ****                 count = 0;
+ 107              		.loc 1 123 0 is_stmt 1
+ 108 003e 164B     		ldr	r3, .L12+4
+ 109 0040 0022     		mov	r2, #0
+ 110 0042 1A60     		str	r2, [r3]
+ 124:switch_sensor.c ****                 /*
+ 125:switch_sensor.c ****                  * Switch Pressed - Send Notification, Turn on Blue LED - Wait till off again
+ 126:switch_sensor.c ****                  */
+ 127:switch_sensor.c ****                 RGB_LED_ON_BLUE;
+ 111              		.loc 1 127 0
+ 112 0044 0120     		mov	r0, #1
+ 113 0046 FFF7FEFF 		bl	LED_RED_Write
+ 114 004a 0120     		mov	r0, #1
+ 115 004c FFF7FEFF 		bl	LED_GREEN_Write
+ 116 0050 0020     		mov	r0, #0
+ 117 0052 FFF7FEFF 		bl	LED_BLUE_Write
+ 128:switch_sensor.c ****                 set_uint32_sensor_data( ASCB_SENSOR_SWITCH, 1 );
+ 118              		.loc 1 128 0
+ 119 0056 0420     		mov	r0, #4
+ 120 0058 0121     		mov	r1, #1
+ 121 005a FFF7FEFF 		bl	set_uint32_sensor_data
+ 129:switch_sensor.c ****                 switch_state = WAIT_TILL_OFF;
+ 122              		.loc 1 129 0
+ 123 005e 0D4B     		ldr	r3, .L12
+ 124 0060 0222     		mov	r2, #2
+ 125 0062 1A60     		str	r2, [r3]
+ 130:switch_sensor.c ****             }
+ 131:switch_sensor.c ****             break;
+ 126              		.loc 1 131 0
+ 127 0064 14E0     		b	.L4
+ 128              	.L11:
+ 129 0066 13E0     		b	.L4
+ 130              	.L8:
+ 132:switch_sensor.c ****         case WAIT_TILL_OFF :
+ 133:switch_sensor.c ****             if( switch_1_Read() != 0 ) {
+ 131              		.loc 1 133 0
+ 132 0068 FFF7FEFF 		bl	switch_1_Read
+ 133 006c 031E     		sub	r3, r0, #0
+ 134 006e 0BD0     		beq	.L5
+ 134:switch_sensor.c ****                 /*
+ 135:switch_sensor.c ****                  * Switch Off got back to monitoring - turn off LED
+ 136:switch_sensor.c ****                  */
+ 137:switch_sensor.c ****                 RGB_LED_OFF;
+ 135              		.loc 1 137 0
+ 136 0070 0120     		mov	r0, #1
+ 137 0072 FFF7FEFF 		bl	LED_RED_Write
+ 138 0076 0120     		mov	r0, #1
+ 139 0078 FFF7FEFF 		bl	LED_GREEN_Write
+ 140 007c 0120     		mov	r0, #1
+ 141 007e FFF7FEFF 		bl	LED_BLUE_Write
+ 138:switch_sensor.c ****                 switch_state = MONITOR_SWITCH;
+ 142              		.loc 1 138 0
+ 143 0082 044B     		ldr	r3, .L12
+ 144 0084 0122     		mov	r2, #1
+ 145 0086 1A60     		str	r2, [r3]
+ 146              	.L5:
+ 139:switch_sensor.c ****             }
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 6
+
+
+ 140:switch_sensor.c ****         default :
+ 141:switch_sensor.c ****             switch_state = SWITCH_INIT;
+ 147              		.loc 1 141 0
+ 148 0088 024B     		ldr	r3, .L12
+ 149 008a 0022     		mov	r2, #0
+ 150 008c 1A60     		str	r2, [r3]
+ 142:switch_sensor.c ****             break;
+ 151              		.loc 1 142 0
+ 152 008e C046     		mov	r8, r8
+ 153              	.L4:
+ 143:switch_sensor.c ****     }
+ 144:switch_sensor.c **** 
+ 145:switch_sensor.c **** }
+ 154              		.loc 1 145 0
+ 155 0090 BD46     		mov	sp, r7
+ 156              		@ sp needed
+ 157 0092 80BD     		pop	{r7, pc}
+ 158              	.L13:
+ 159              		.align	2
+ 160              	.L12:
+ 161 0094 00000000 		.word	switch_state
+ 162 0098 00000000 		.word	count
+ 163 009c A0860100 		.word	100000
+ 164              		.cfi_endproc
+ 165              	.LFE37:
+ 166              		.size	process_switch, .-process_switch
+ 167              		.text
+ 168              	.Letext0:
+ 169              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.0\\psoc creator\\import\\gnu\\arm\\4.9.
+ 170              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.0\\psoc creator\\import\\gnu\\arm\\4.9.
+ 171              		.section	.debug_info,"",%progbits
+ 172              	.Ldebug_info0:
+ 173 0000 F9000000 		.4byte	0xf9
+ 174 0004 0400     		.2byte	0x4
+ 175 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 176 000a 04       		.byte	0x4
+ 177 000b 01       		.uleb128 0x1
+ 178 000c 0E000000 		.4byte	.LASF22
+ 179 0010 01       		.byte	0x1
+ 180 0011 61010000 		.4byte	.LASF23
+ 181 0015 91010000 		.4byte	.LASF24
+ 182 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 183 001d 00000000 		.4byte	0
+ 184 0021 00000000 		.4byte	.Ldebug_line0
+ 185 0025 02       		.uleb128 0x2
+ 186 0026 01       		.byte	0x1
+ 187 0027 06       		.byte	0x6
+ 188 0028 C6000000 		.4byte	.LASF0
+ 189 002c 02       		.uleb128 0x2
+ 190 002d 01       		.byte	0x1
+ 191 002e 08       		.byte	0x8
+ 192 002f 0A010000 		.4byte	.LASF1
+ 193 0033 02       		.uleb128 0x2
+ 194 0034 02       		.byte	0x2
+ 195 0035 05       		.byte	0x5
+ 196 0036 D6010000 		.4byte	.LASF2
+ 197 003a 02       		.uleb128 0x2
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 7
+
+
+ 198 003b 02       		.byte	0x2
+ 199 003c 07       		.byte	0x7
+ 200 003d 4E010000 		.4byte	.LASF3
+ 201 0041 02       		.uleb128 0x2
+ 202 0042 04       		.byte	0x4
+ 203 0043 05       		.byte	0x5
+ 204 0044 26010000 		.4byte	.LASF4
+ 205 0048 03       		.uleb128 0x3
+ 206 0049 BB000000 		.4byte	.LASF9
+ 207 004d 02       		.byte	0x2
+ 208 004e 41       		.byte	0x41
+ 209 004f 53000000 		.4byte	0x53
+ 210 0053 02       		.uleb128 0x2
+ 211 0054 04       		.byte	0x4
+ 212 0055 07       		.byte	0x7
+ 213 0056 D2000000 		.4byte	.LASF5
+ 214 005a 02       		.uleb128 0x2
+ 215 005b 08       		.byte	0x8
+ 216 005c 05       		.byte	0x5
+ 217 005d 00000000 		.4byte	.LASF6
+ 218 0061 02       		.uleb128 0x2
+ 219 0062 08       		.byte	0x8
+ 220 0063 07       		.byte	0x7
+ 221 0064 E4000000 		.4byte	.LASF7
+ 222 0068 04       		.uleb128 0x4
+ 223 0069 04       		.byte	0x4
+ 224 006a 05       		.byte	0x5
+ 225 006b 696E7400 		.ascii	"int\000"
+ 226 006f 02       		.uleb128 0x2
+ 227 0070 04       		.byte	0x4
+ 228 0071 07       		.byte	0x7
+ 229 0072 9C000000 		.4byte	.LASF8
+ 230 0076 03       		.uleb128 0x3
+ 231 0077 1D010000 		.4byte	.LASF10
+ 232 007b 03       		.byte	0x3
+ 233 007c 2D       		.byte	0x2d
+ 234 007d 48000000 		.4byte	0x48
+ 235 0081 02       		.uleb128 0x2
+ 236 0082 04       		.byte	0x4
+ 237 0083 04       		.byte	0x4
+ 238 0084 7F010000 		.4byte	.LASF11
+ 239 0088 02       		.uleb128 0x2
+ 240 0089 08       		.byte	0x8
+ 241 008a 04       		.byte	0x4
+ 242 008b 3E010000 		.4byte	.LASF12
+ 243 008f 02       		.uleb128 0x2
+ 244 0090 01       		.byte	0x1
+ 245 0091 08       		.byte	0x8
+ 246 0092 18010000 		.4byte	.LASF13
+ 247 0096 02       		.uleb128 0x2
+ 248 0097 04       		.byte	0x4
+ 249 0098 07       		.byte	0x7
+ 250 0099 45010000 		.4byte	.LASF14
+ 251 009d 05       		.uleb128 0x5
+ 252 009e 01       		.byte	0x1
+ 253 009f 01       		.byte	0x1
+ 254 00a0 40       		.byte	0x40
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 8
+
+
+ 255 00a1 B8000000 		.4byte	0xb8
+ 256 00a5 06       		.uleb128 0x6
+ 257 00a6 AF000000 		.4byte	.LASF15
+ 258 00aa 00       		.sleb128 0
+ 259 00ab 06       		.uleb128 0x6
+ 260 00ac 2F010000 		.4byte	.LASF16
+ 261 00b0 01       		.sleb128 1
+ 262 00b1 06       		.uleb128 0x6
+ 263 00b2 71010000 		.4byte	.LASF17
+ 264 00b6 02       		.sleb128 2
+ 265 00b7 00       		.byte	0
+ 266 00b8 07       		.uleb128 0x7
+ 267 00b9 85010000 		.4byte	.LASF18
+ 268 00bd 01       		.byte	0x1
+ 269 00be 62       		.byte	0x62
+ 270 00bf 00000000 		.4byte	.LFB36
+ 271 00c3 14000000 		.4byte	.LFE36-.LFB36
+ 272 00c7 01       		.uleb128 0x1
+ 273 00c8 9C       		.byte	0x9c
+ 274 00c9 08       		.uleb128 0x8
+ 275 00ca FB000000 		.4byte	.LASF19
+ 276 00ce 01       		.byte	0x1
+ 277 00cf 6D       		.byte	0x6d
+ 278 00d0 00000000 		.4byte	.LFB37
+ 279 00d4 A0000000 		.4byte	.LFE37-.LFB37
+ 280 00d8 01       		.uleb128 0x1
+ 281 00d9 9C       		.byte	0x9c
+ 282 00da 09       		.uleb128 0x9
+ 283 00db E0010000 		.4byte	.LASF20
+ 284 00df 01       		.byte	0x1
+ 285 00e0 58       		.byte	0x58
+ 286 00e1 76000000 		.4byte	0x76
+ 287 00e5 05       		.uleb128 0x5
+ 288 00e6 03       		.byte	0x3
+ 289 00e7 00000000 		.4byte	switch_state
+ 290 00eb 09       		.uleb128 0x9
+ 291 00ec A9000000 		.4byte	.LASF21
+ 292 00f0 01       		.byte	0x1
+ 293 00f1 6C       		.byte	0x6c
+ 294 00f2 76000000 		.4byte	0x76
+ 295 00f6 05       		.uleb128 0x5
+ 296 00f7 03       		.byte	0x3
+ 297 00f8 00000000 		.4byte	count
+ 298 00fc 00       		.byte	0
+ 299              		.section	.debug_abbrev,"",%progbits
+ 300              	.Ldebug_abbrev0:
+ 301 0000 01       		.uleb128 0x1
+ 302 0001 11       		.uleb128 0x11
+ 303 0002 01       		.byte	0x1
+ 304 0003 25       		.uleb128 0x25
+ 305 0004 0E       		.uleb128 0xe
+ 306 0005 13       		.uleb128 0x13
+ 307 0006 0B       		.uleb128 0xb
+ 308 0007 03       		.uleb128 0x3
+ 309 0008 0E       		.uleb128 0xe
+ 310 0009 1B       		.uleb128 0x1b
+ 311 000a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 9
+
+
+ 312 000b 55       		.uleb128 0x55
+ 313 000c 17       		.uleb128 0x17
+ 314 000d 11       		.uleb128 0x11
+ 315 000e 01       		.uleb128 0x1
+ 316 000f 10       		.uleb128 0x10
+ 317 0010 17       		.uleb128 0x17
+ 318 0011 00       		.byte	0
+ 319 0012 00       		.byte	0
+ 320 0013 02       		.uleb128 0x2
+ 321 0014 24       		.uleb128 0x24
+ 322 0015 00       		.byte	0
+ 323 0016 0B       		.uleb128 0xb
+ 324 0017 0B       		.uleb128 0xb
+ 325 0018 3E       		.uleb128 0x3e
+ 326 0019 0B       		.uleb128 0xb
+ 327 001a 03       		.uleb128 0x3
+ 328 001b 0E       		.uleb128 0xe
+ 329 001c 00       		.byte	0
+ 330 001d 00       		.byte	0
+ 331 001e 03       		.uleb128 0x3
+ 332 001f 16       		.uleb128 0x16
+ 333 0020 00       		.byte	0
+ 334 0021 03       		.uleb128 0x3
+ 335 0022 0E       		.uleb128 0xe
+ 336 0023 3A       		.uleb128 0x3a
+ 337 0024 0B       		.uleb128 0xb
+ 338 0025 3B       		.uleb128 0x3b
+ 339 0026 0B       		.uleb128 0xb
+ 340 0027 49       		.uleb128 0x49
+ 341 0028 13       		.uleb128 0x13
+ 342 0029 00       		.byte	0
+ 343 002a 00       		.byte	0
+ 344 002b 04       		.uleb128 0x4
+ 345 002c 24       		.uleb128 0x24
+ 346 002d 00       		.byte	0
+ 347 002e 0B       		.uleb128 0xb
+ 348 002f 0B       		.uleb128 0xb
+ 349 0030 3E       		.uleb128 0x3e
+ 350 0031 0B       		.uleb128 0xb
+ 351 0032 03       		.uleb128 0x3
+ 352 0033 08       		.uleb128 0x8
+ 353 0034 00       		.byte	0
+ 354 0035 00       		.byte	0
+ 355 0036 05       		.uleb128 0x5
+ 356 0037 04       		.uleb128 0x4
+ 357 0038 01       		.byte	0x1
+ 358 0039 0B       		.uleb128 0xb
+ 359 003a 0B       		.uleb128 0xb
+ 360 003b 3A       		.uleb128 0x3a
+ 361 003c 0B       		.uleb128 0xb
+ 362 003d 3B       		.uleb128 0x3b
+ 363 003e 0B       		.uleb128 0xb
+ 364 003f 01       		.uleb128 0x1
+ 365 0040 13       		.uleb128 0x13
+ 366 0041 00       		.byte	0
+ 367 0042 00       		.byte	0
+ 368 0043 06       		.uleb128 0x6
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 10
+
+
+ 369 0044 28       		.uleb128 0x28
+ 370 0045 00       		.byte	0
+ 371 0046 03       		.uleb128 0x3
+ 372 0047 0E       		.uleb128 0xe
+ 373 0048 1C       		.uleb128 0x1c
+ 374 0049 0D       		.uleb128 0xd
+ 375 004a 00       		.byte	0
+ 376 004b 00       		.byte	0
+ 377 004c 07       		.uleb128 0x7
+ 378 004d 2E       		.uleb128 0x2e
+ 379 004e 00       		.byte	0
+ 380 004f 3F       		.uleb128 0x3f
+ 381 0050 19       		.uleb128 0x19
+ 382 0051 03       		.uleb128 0x3
+ 383 0052 0E       		.uleb128 0xe
+ 384 0053 3A       		.uleb128 0x3a
+ 385 0054 0B       		.uleb128 0xb
+ 386 0055 3B       		.uleb128 0x3b
+ 387 0056 0B       		.uleb128 0xb
+ 388 0057 27       		.uleb128 0x27
+ 389 0058 19       		.uleb128 0x19
+ 390 0059 11       		.uleb128 0x11
+ 391 005a 01       		.uleb128 0x1
+ 392 005b 12       		.uleb128 0x12
+ 393 005c 06       		.uleb128 0x6
+ 394 005d 40       		.uleb128 0x40
+ 395 005e 18       		.uleb128 0x18
+ 396 005f 9742     		.uleb128 0x2117
+ 397 0061 19       		.uleb128 0x19
+ 398 0062 00       		.byte	0
+ 399 0063 00       		.byte	0
+ 400 0064 08       		.uleb128 0x8
+ 401 0065 2E       		.uleb128 0x2e
+ 402 0066 00       		.byte	0
+ 403 0067 3F       		.uleb128 0x3f
+ 404 0068 19       		.uleb128 0x19
+ 405 0069 03       		.uleb128 0x3
+ 406 006a 0E       		.uleb128 0xe
+ 407 006b 3A       		.uleb128 0x3a
+ 408 006c 0B       		.uleb128 0xb
+ 409 006d 3B       		.uleb128 0x3b
+ 410 006e 0B       		.uleb128 0xb
+ 411 006f 27       		.uleb128 0x27
+ 412 0070 19       		.uleb128 0x19
+ 413 0071 11       		.uleb128 0x11
+ 414 0072 01       		.uleb128 0x1
+ 415 0073 12       		.uleb128 0x12
+ 416 0074 06       		.uleb128 0x6
+ 417 0075 40       		.uleb128 0x40
+ 418 0076 18       		.uleb128 0x18
+ 419 0077 9642     		.uleb128 0x2116
+ 420 0079 19       		.uleb128 0x19
+ 421 007a 00       		.byte	0
+ 422 007b 00       		.byte	0
+ 423 007c 09       		.uleb128 0x9
+ 424 007d 34       		.uleb128 0x34
+ 425 007e 00       		.byte	0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 11
+
+
+ 426 007f 03       		.uleb128 0x3
+ 427 0080 0E       		.uleb128 0xe
+ 428 0081 3A       		.uleb128 0x3a
+ 429 0082 0B       		.uleb128 0xb
+ 430 0083 3B       		.uleb128 0x3b
+ 431 0084 0B       		.uleb128 0xb
+ 432 0085 49       		.uleb128 0x49
+ 433 0086 13       		.uleb128 0x13
+ 434 0087 3F       		.uleb128 0x3f
+ 435 0088 19       		.uleb128 0x19
+ 436 0089 02       		.uleb128 0x2
+ 437 008a 18       		.uleb128 0x18
+ 438 008b 00       		.byte	0
+ 439 008c 00       		.byte	0
+ 440 008d 00       		.byte	0
+ 441              		.section	.debug_aranges,"",%progbits
+ 442 0000 24000000 		.4byte	0x24
+ 443 0004 0200     		.2byte	0x2
+ 444 0006 00000000 		.4byte	.Ldebug_info0
+ 445 000a 04       		.byte	0x4
+ 446 000b 00       		.byte	0
+ 447 000c 0000     		.2byte	0
+ 448 000e 0000     		.2byte	0
+ 449 0010 00000000 		.4byte	.LFB36
+ 450 0014 14000000 		.4byte	.LFE36-.LFB36
+ 451 0018 00000000 		.4byte	.LFB37
+ 452 001c A0000000 		.4byte	.LFE37-.LFB37
+ 453 0020 00000000 		.4byte	0
+ 454 0024 00000000 		.4byte	0
+ 455              		.section	.debug_ranges,"",%progbits
+ 456              	.Ldebug_ranges0:
+ 457 0000 00000000 		.4byte	.LFB36
+ 458 0004 14000000 		.4byte	.LFE36
+ 459 0008 00000000 		.4byte	.LFB37
+ 460 000c A0000000 		.4byte	.LFE37
+ 461 0010 00000000 		.4byte	0
+ 462 0014 00000000 		.4byte	0
+ 463              		.section	.debug_line,"",%progbits
+ 464              	.Ldebug_line0:
+ 465 0000 5E010000 		.section	.debug_str,"MS",%progbits,1
+ 465      02001E01 
+ 465      00000201 
+ 465      FB0E0D00 
+ 465      01010101 
+ 466              	.LASF6:
+ 467 0000 6C6F6E67 		.ascii	"long long int\000"
+ 467      206C6F6E 
+ 467      6720696E 
+ 467      7400
+ 468              	.LASF22:
+ 469 000e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 469      4320342E 
+ 469      392E3320 
+ 469      32303135 
+ 469      30333033 
+ 470 0041 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 470      20726576 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 12
+
+
+ 470      6973696F 
+ 470      6E203232 
+ 470      31323230 
+ 471 0074 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 471      66756E63 
+ 471      74696F6E 
+ 471      2D736563 
+ 471      74696F6E 
+ 472              	.LASF8:
+ 473 009c 756E7369 		.ascii	"unsigned int\000"
+ 473      676E6564 
+ 473      20696E74 
+ 473      00
+ 474              	.LASF21:
+ 475 00a9 636F756E 		.ascii	"count\000"
+ 475      7400
+ 476              	.LASF15:
+ 477 00af 53574954 		.ascii	"SWITCH_INIT\000"
+ 477      43485F49 
+ 477      4E495400 
+ 478              	.LASF9:
+ 479 00bb 5F5F7569 		.ascii	"__uint32_t\000"
+ 479      6E743332 
+ 479      5F7400
+ 480              	.LASF0:
+ 481 00c6 7369676E 		.ascii	"signed char\000"
+ 481      65642063 
+ 481      68617200 
+ 482              	.LASF5:
+ 483 00d2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 483      20756E73 
+ 483      69676E65 
+ 483      6420696E 
+ 483      7400
+ 484              	.LASF7:
+ 485 00e4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 485      206C6F6E 
+ 485      6720756E 
+ 485      7369676E 
+ 485      65642069 
+ 486              	.LASF19:
+ 487 00fb 70726F63 		.ascii	"process_switch\000"
+ 487      6573735F 
+ 487      73776974 
+ 487      636800
+ 488              	.LASF1:
+ 489 010a 756E7369 		.ascii	"unsigned char\000"
+ 489      676E6564 
+ 489      20636861 
+ 489      7200
+ 490              	.LASF13:
+ 491 0118 63686172 		.ascii	"char\000"
+ 491      00
+ 492              	.LASF10:
+ 493 011d 75696E74 		.ascii	"uint32_t\000"
+ 493      33325F74 
+ 493      00
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 13
+
+
+ 494              	.LASF4:
+ 495 0126 6C6F6E67 		.ascii	"long int\000"
+ 495      20696E74 
+ 495      00
+ 496              	.LASF16:
+ 497 012f 4D4F4E49 		.ascii	"MONITOR_SWITCH\000"
+ 497      544F525F 
+ 497      53574954 
+ 497      434800
+ 498              	.LASF12:
+ 499 013e 646F7562 		.ascii	"double\000"
+ 499      6C6500
+ 500              	.LASF14:
+ 501 0145 73697A65 		.ascii	"sizetype\000"
+ 501      74797065 
+ 501      00
+ 502              	.LASF3:
+ 503 014e 73686F72 		.ascii	"short unsigned int\000"
+ 503      7420756E 
+ 503      7369676E 
+ 503      65642069 
+ 503      6E7400
+ 504              	.LASF23:
+ 505 0161 73776974 		.ascii	"switch_sensor.c\000"
+ 505      63685F73 
+ 505      656E736F 
+ 505      722E6300 
+ 506              	.LASF17:
+ 507 0171 57414954 		.ascii	"WAIT_TILL_OFF\000"
+ 507      5F54494C 
+ 507      4C5F4F46 
+ 507      4600
+ 508              	.LASF11:
+ 509 017f 666C6F61 		.ascii	"float\000"
+ 509      7400
+ 510              	.LASF18:
+ 511 0185 696E6974 		.ascii	"init_switch\000"
+ 511      5F737769 
+ 511      74636800 
+ 512              	.LASF24:
+ 513 0191 443A5C44 		.ascii	"D:\\Dropbox\\IoT Development\\Cypress PSoC Developm"
+ 513      726F7062 
+ 513      6F785C49 
+ 513      6F542044 
+ 513      6576656C 
+ 514 01c1 656E745C 		.ascii	"ent\\RTD Design.cydsn\000"
+ 514      52544420 
+ 514      44657369 
+ 514      676E2E63 
+ 514      7964736E 
+ 515              	.LASF2:
+ 516 01d6 73686F72 		.ascii	"short int\000"
+ 516      7420696E 
+ 516      7400
+ 517              	.LASF20:
+ 518 01e0 73776974 		.ascii	"switch_state\000"
+ 518      63685F73 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\cc7vpJ8g.s 			page 14
+
+
+ 518      74617465 
+ 518      00
+ 519              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

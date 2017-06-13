@@ -1,0 +1,491 @@
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"sensors.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global _printf_float
+  18              		.code	16
+  19              		.section	.text.init_sensors,"ax",%progbits
+  20              		.align	2
+  21              		.global	init_sensors
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	init_sensors, %function
+  25              	init_sensors:
+  26              	.LFB36:
+  27              		.file 1 "sensors.c"
+   1:sensors.c     **** /*
+   2:sensors.c     ****  * Copyright 2017, Sierra Telecom. All Rights Reserved.
+   3:sensors.c     ****  *
+   4:sensors.c     ****  * This software, associated documentation and materials ("Software"),
+   5:sensors.c     ****  * is owned by Sierra Telecom ("Sierra") and is protected by and subject to
+   6:sensors.c     ****  * worldwide patent protection (United States and foreign),
+   7:sensors.c     ****  * United States copyright laws and international treaty provisions.
+   8:sensors.c     ****  * Therefore, you may use this Software only as provided in the license
+   9:sensors.c     ****  * agreement accompanying the software package from which you
+  10:sensors.c     ****  * obtained this Software ("EULA").
+  11:sensors.c     ****  * If no EULA applies, Sierra hereby grants you a personal, non-exclusive,
+  12:sensors.c     ****  * non-transferable license to copy, modify, and compile the Software
+  13:sensors.c     ****  * source code solely for use in connection with Sierra's
+  14:sensors.c     ****  * integrated circuit products. Any reproduction, modification, translation,
+  15:sensors.c     ****  * compilation, or representation of this Software except as specified
+  16:sensors.c     ****  * above is prohibited without the express written permission of Sierra.
+  17:sensors.c     ****  *
+  18:sensors.c     ****  * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  19:sensors.c     ****  * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  20:sensors.c     ****  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Sierra
+  21:sensors.c     ****  * reserves the right to make changes to the Software without notice. Sierra
+  22:sensors.c     ****  * does not assume any liability arising out of the application or use of the
+  23:sensors.c     ****  * Software or any product or circuit described in the Software. Sierra does
+  24:sensors.c     ****  * not authorize its products for use in any products where a malfunction or
+  25:sensors.c     ****  * failure of the Sierra product may reasonably be expected to result in
+  26:sensors.c     ****  * significant property damage, injury or death ("High Risk Product"). By
+  27:sensors.c     ****  * including Sierra's product in a High Risk Product, the manufacturer
+  28:sensors.c     ****  * of such system or application assumes all risk of such use and in doing
+  29:sensors.c     ****  * so agrees to indemnify Sierra against all liability.
+  30:sensors.c     ****  */
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 2
+
+
+  31:sensors.c     **** /** @file cypress_slave_spi.c
+  32:sensors.c     ****  *
+  33:sensors.c     ****  *  Created on: April 26, 2017
+  34:sensors.c     ****  *      Author: greg.phillips
+  35:sensors.c     ****  */
+  36:sensors.c     **** 
+  37:sensors.c     **** #if defined (__GNUC__)
+  38:sensors.c     ****     /* Add an explicit reference to the floating point printf library */
+  39:sensors.c     ****     /* to allow the usage of floating point conversion specifiers. */
+  40:sensors.c     ****     /* This is not linked in by default with the newlib-nano library. */
+  41:sensors.c     ****     asm (".global _printf_float");
+  42:sensors.c     **** #endif
+  43:sensors.c     **** 
+  44:sensors.c     **** 
+  45:sensors.c     **** #include <project.h>
+  46:sensors.c     **** #include <stdint.h>
+  47:sensors.c     **** #include <stdbool.h>
+  48:sensors.c     **** #include <stdlib.h>
+  49:sensors.c     **** 
+  50:sensors.c     **** #include "arduino.h"
+  51:sensors.c     **** #include "cypress_arduino.h"
+  52:sensors.c     **** #include "RTD_sensor.h"
+  53:sensors.c     **** #include "switch_sensor.h"
+  54:sensors.c     **** /******************************************************
+  55:sensors.c     ****  *                      Macros
+  56:sensors.c     ****  ******************************************************/
+  57:sensors.c     **** 
+  58:sensors.c     **** /******************************************************
+  59:sensors.c     ****  *                    Constants
+  60:sensors.c     ****  ******************************************************/
+  61:sensors.c     **** 
+  62:sensors.c     **** /******************************************************
+  63:sensors.c     ****  *                   Enumerations
+  64:sensors.c     ****  ******************************************************/
+  65:sensors.c     **** 
+  66:sensors.c     **** /******************************************************
+  67:sensors.c     ****  *                 Type Definitions
+  68:sensors.c     ****  ******************************************************/
+  69:sensors.c     **** 
+  70:sensors.c     **** /******************************************************
+  71:sensors.c     ****  *                    Structures
+  72:sensors.c     ****  ******************************************************/
+  73:sensors.c     **** 
+  74:sensors.c     **** /******************************************************
+  75:sensors.c     ****  *               Function Declarations
+  76:sensors.c     ****  ******************************************************/
+  77:sensors.c     **** 
+  78:sensors.c     **** /******************************************************
+  79:sensors.c     ****  *               Variable Definitions
+  80:sensors.c     ****  ******************************************************/
+  81:sensors.c     **** 
+  82:sensors.c     **** /******************************************************
+  83:sensors.c     ****  *               Function Definitions
+  84:sensors.c     ****  ******************************************************/
+  85:sensors.c     **** /**
+  86:sensors.c     ****   * @brief Initialize any sensors
+  87:sensors.c     ****   * @param  None
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 3
+
+
+  88:sensors.c     ****   * @retval : None
+  89:sensors.c     ****   */
+  90:sensors.c     **** void init_sensors(void)
+  91:sensors.c     **** {
+  28              		.loc 1 91 0
+  29              		.cfi_startproc
+  30 0000 80B5     		push	{r7, lr}
+  31              		.cfi_def_cfa_offset 8
+  32              		.cfi_offset 7, -8
+  33              		.cfi_offset 14, -4
+  34 0002 00AF     		add	r7, sp, #0
+  35              		.cfi_def_cfa_register 7
+  92:sensors.c     ****     init_RTD();
+  36              		.loc 1 92 0
+  37 0004 FFF7FEFF 		bl	init_RTD
+  93:sensors.c     ****     init_switch();
+  38              		.loc 1 93 0
+  39 0008 FFF7FEFF 		bl	init_switch
+  94:sensors.c     **** }
+  40              		.loc 1 94 0
+  41 000c BD46     		mov	sp, r7
+  42              		@ sp needed
+  43 000e 80BD     		pop	{r7, pc}
+  44              		.cfi_endproc
+  45              	.LFE36:
+  46              		.size	init_sensors, .-init_sensors
+  47              		.section	.text.process_sensors,"ax",%progbits
+  48              		.align	2
+  49              		.global	process_sensors
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	process_sensors, %function
+  53              	process_sensors:
+  54              	.LFB37:
+  95:sensors.c     **** 
+  96:sensors.c     **** /**
+  97:sensors.c     ****   * @brief Process sensors
+  98:sensors.c     ****   * @param  None
+  99:sensors.c     ****   * @retval : None
+ 100:sensors.c     ****   */
+ 101:sensors.c     **** 
+ 102:sensors.c     **** void process_sensors(void)
+ 103:sensors.c     **** {
+  55              		.loc 1 103 0
+  56              		.cfi_startproc
+  57 0000 80B5     		push	{r7, lr}
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 7, -8
+  60              		.cfi_offset 14, -4
+  61 0002 00AF     		add	r7, sp, #0
+  62              		.cfi_def_cfa_register 7
+ 104:sensors.c     ****     process_RTD();
+  63              		.loc 1 104 0
+  64 0004 FFF7FEFF 		bl	process_RTD
+ 105:sensors.c     ****     process_switch();
+  65              		.loc 1 105 0
+  66 0008 FFF7FEFF 		bl	process_switch
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 4
+
+
+ 106:sensors.c     **** }
+  67              		.loc 1 106 0
+  68 000c BD46     		mov	sp, r7
+  69              		@ sp needed
+  70 000e 80BD     		pop	{r7, pc}
+  71              		.cfi_endproc
+  72              	.LFE37:
+  73              		.size	process_sensors, .-process_sensors
+  74              		.text
+  75              	.Letext0:
+  76              		.section	.debug_info,"",%progbits
+  77              	.Ldebug_info0:
+  78 0000 A6000000 		.4byte	0xa6
+  79 0004 0400     		.2byte	0x4
+  80 0006 00000000 		.4byte	.Ldebug_abbrev0
+  81 000a 04       		.byte	0x4
+  82 000b 01       		.uleb128 0x1
+  83 000c 0E000000 		.4byte	.LASF15
+  84 0010 01       		.byte	0x1
+  85 0011 08010000 		.4byte	.LASF16
+  86 0015 3E010000 		.4byte	.LASF17
+  87 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  88 001d 00000000 		.4byte	0
+  89 0021 00000000 		.4byte	.Ldebug_line0
+  90 0025 02       		.uleb128 0x2
+  91 0026 01       		.byte	0x1
+  92 0027 06       		.byte	0x6
+  93 0028 2C010000 		.4byte	.LASF0
+  94 002c 02       		.uleb128 0x2
+  95 002d 01       		.byte	0x1
+  96 002e 08       		.byte	0x8
+  97 002f E2000000 		.4byte	.LASF1
+  98 0033 02       		.uleb128 0x2
+  99 0034 02       		.byte	0x2
+ 100 0035 05       		.byte	0x5
+ 101 0036 FE000000 		.4byte	.LASF2
+ 102 003a 02       		.uleb128 0x2
+ 103 003b 02       		.byte	0x2
+ 104 003c 07       		.byte	0x7
+ 105 003d 19010000 		.4byte	.LASF3
+ 106 0041 02       		.uleb128 0x2
+ 107 0042 04       		.byte	0x4
+ 108 0043 05       		.byte	0x5
+ 109 0044 F5000000 		.4byte	.LASF4
+ 110 0048 02       		.uleb128 0x2
+ 111 0049 04       		.byte	0x4
+ 112 004a 07       		.byte	0x7
+ 113 004b B9000000 		.4byte	.LASF5
+ 114 004f 02       		.uleb128 0x2
+ 115 0050 08       		.byte	0x8
+ 116 0051 05       		.byte	0x5
+ 117 0052 00000000 		.4byte	.LASF6
+ 118 0056 02       		.uleb128 0x2
+ 119 0057 08       		.byte	0x8
+ 120 0058 07       		.byte	0x7
+ 121 0059 CB000000 		.4byte	.LASF7
+ 122 005d 03       		.uleb128 0x3
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 5
+
+
+ 123 005e 04       		.byte	0x4
+ 124 005f 05       		.byte	0x5
+ 125 0060 696E7400 		.ascii	"int\000"
+ 126 0064 02       		.uleb128 0x2
+ 127 0065 04       		.byte	0x4
+ 128 0066 07       		.byte	0x7
+ 129 0067 9C000000 		.4byte	.LASF8
+ 130 006b 02       		.uleb128 0x2
+ 131 006c 04       		.byte	0x4
+ 132 006d 04       		.byte	0x4
+ 133 006e 38010000 		.4byte	.LASF9
+ 134 0072 02       		.uleb128 0x2
+ 135 0073 08       		.byte	0x8
+ 136 0074 04       		.byte	0x4
+ 137 0075 12010000 		.4byte	.LASF10
+ 138 0079 02       		.uleb128 0x2
+ 139 007a 01       		.byte	0x1
+ 140 007b 08       		.byte	0x8
+ 141 007c F0000000 		.4byte	.LASF11
+ 142 0080 02       		.uleb128 0x2
+ 143 0081 04       		.byte	0x4
+ 144 0082 07       		.byte	0x7
+ 145 0083 90010000 		.4byte	.LASF12
+ 146 0087 04       		.uleb128 0x4
+ 147 0088 83010000 		.4byte	.LASF13
+ 148 008c 01       		.byte	0x1
+ 149 008d 5A       		.byte	0x5a
+ 150 008e 00000000 		.4byte	.LFB36
+ 151 0092 10000000 		.4byte	.LFE36-.LFB36
+ 152 0096 01       		.uleb128 0x1
+ 153 0097 9C       		.byte	0x9c
+ 154 0098 04       		.uleb128 0x4
+ 155 0099 A9000000 		.4byte	.LASF14
+ 156 009d 01       		.byte	0x1
+ 157 009e 66       		.byte	0x66
+ 158 009f 00000000 		.4byte	.LFB37
+ 159 00a3 10000000 		.4byte	.LFE37-.LFB37
+ 160 00a7 01       		.uleb128 0x1
+ 161 00a8 9C       		.byte	0x9c
+ 162 00a9 00       		.byte	0
+ 163              		.section	.debug_abbrev,"",%progbits
+ 164              	.Ldebug_abbrev0:
+ 165 0000 01       		.uleb128 0x1
+ 166 0001 11       		.uleb128 0x11
+ 167 0002 01       		.byte	0x1
+ 168 0003 25       		.uleb128 0x25
+ 169 0004 0E       		.uleb128 0xe
+ 170 0005 13       		.uleb128 0x13
+ 171 0006 0B       		.uleb128 0xb
+ 172 0007 03       		.uleb128 0x3
+ 173 0008 0E       		.uleb128 0xe
+ 174 0009 1B       		.uleb128 0x1b
+ 175 000a 0E       		.uleb128 0xe
+ 176 000b 55       		.uleb128 0x55
+ 177 000c 17       		.uleb128 0x17
+ 178 000d 11       		.uleb128 0x11
+ 179 000e 01       		.uleb128 0x1
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 6
+
+
+ 180 000f 10       		.uleb128 0x10
+ 181 0010 17       		.uleb128 0x17
+ 182 0011 00       		.byte	0
+ 183 0012 00       		.byte	0
+ 184 0013 02       		.uleb128 0x2
+ 185 0014 24       		.uleb128 0x24
+ 186 0015 00       		.byte	0
+ 187 0016 0B       		.uleb128 0xb
+ 188 0017 0B       		.uleb128 0xb
+ 189 0018 3E       		.uleb128 0x3e
+ 190 0019 0B       		.uleb128 0xb
+ 191 001a 03       		.uleb128 0x3
+ 192 001b 0E       		.uleb128 0xe
+ 193 001c 00       		.byte	0
+ 194 001d 00       		.byte	0
+ 195 001e 03       		.uleb128 0x3
+ 196 001f 24       		.uleb128 0x24
+ 197 0020 00       		.byte	0
+ 198 0021 0B       		.uleb128 0xb
+ 199 0022 0B       		.uleb128 0xb
+ 200 0023 3E       		.uleb128 0x3e
+ 201 0024 0B       		.uleb128 0xb
+ 202 0025 03       		.uleb128 0x3
+ 203 0026 08       		.uleb128 0x8
+ 204 0027 00       		.byte	0
+ 205 0028 00       		.byte	0
+ 206 0029 04       		.uleb128 0x4
+ 207 002a 2E       		.uleb128 0x2e
+ 208 002b 00       		.byte	0
+ 209 002c 3F       		.uleb128 0x3f
+ 210 002d 19       		.uleb128 0x19
+ 211 002e 03       		.uleb128 0x3
+ 212 002f 0E       		.uleb128 0xe
+ 213 0030 3A       		.uleb128 0x3a
+ 214 0031 0B       		.uleb128 0xb
+ 215 0032 3B       		.uleb128 0x3b
+ 216 0033 0B       		.uleb128 0xb
+ 217 0034 27       		.uleb128 0x27
+ 218 0035 19       		.uleb128 0x19
+ 219 0036 11       		.uleb128 0x11
+ 220 0037 01       		.uleb128 0x1
+ 221 0038 12       		.uleb128 0x12
+ 222 0039 06       		.uleb128 0x6
+ 223 003a 40       		.uleb128 0x40
+ 224 003b 18       		.uleb128 0x18
+ 225 003c 9642     		.uleb128 0x2116
+ 226 003e 19       		.uleb128 0x19
+ 227 003f 00       		.byte	0
+ 228 0040 00       		.byte	0
+ 229 0041 00       		.byte	0
+ 230              		.section	.debug_aranges,"",%progbits
+ 231 0000 24000000 		.4byte	0x24
+ 232 0004 0200     		.2byte	0x2
+ 233 0006 00000000 		.4byte	.Ldebug_info0
+ 234 000a 04       		.byte	0x4
+ 235 000b 00       		.byte	0
+ 236 000c 0000     		.2byte	0
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 7
+
+
+ 237 000e 0000     		.2byte	0
+ 238 0010 00000000 		.4byte	.LFB36
+ 239 0014 10000000 		.4byte	.LFE36-.LFB36
+ 240 0018 00000000 		.4byte	.LFB37
+ 241 001c 10000000 		.4byte	.LFE37-.LFB37
+ 242 0020 00000000 		.4byte	0
+ 243 0024 00000000 		.4byte	0
+ 244              		.section	.debug_ranges,"",%progbits
+ 245              	.Ldebug_ranges0:
+ 246 0000 00000000 		.4byte	.LFB36
+ 247 0004 10000000 		.4byte	.LFE36
+ 248 0008 00000000 		.4byte	.LFB37
+ 249 000c 10000000 		.4byte	.LFE37
+ 250 0010 00000000 		.4byte	0
+ 251 0014 00000000 		.4byte	0
+ 252              		.section	.debug_line,"",%progbits
+ 253              	.Ldebug_line0:
+ 254 0000 4C000000 		.section	.debug_str,"MS",%progbits,1
+ 254      02002000 
+ 254      00000201 
+ 254      FB0E0D00 
+ 254      01010101 
+ 255              	.LASF6:
+ 256 0000 6C6F6E67 		.ascii	"long long int\000"
+ 256      206C6F6E 
+ 256      6720696E 
+ 256      7400
+ 257              	.LASF15:
+ 258 000e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 258      4320342E 
+ 258      392E3320 
+ 258      32303135 
+ 258      30333033 
+ 259 0041 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 259      20726576 
+ 259      6973696F 
+ 259      6E203232 
+ 259      31323230 
+ 260 0074 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 260      66756E63 
+ 260      74696F6E 
+ 260      2D736563 
+ 260      74696F6E 
+ 261              	.LASF8:
+ 262 009c 756E7369 		.ascii	"unsigned int\000"
+ 262      676E6564 
+ 262      20696E74 
+ 262      00
+ 263              	.LASF14:
+ 264 00a9 70726F63 		.ascii	"process_sensors\000"
+ 264      6573735F 
+ 264      73656E73 
+ 264      6F727300 
+ 265              	.LASF5:
+ 266 00b9 6C6F6E67 		.ascii	"long unsigned int\000"
+ 266      20756E73 
+ 266      69676E65 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 8
+
+
+ 266      6420696E 
+ 266      7400
+ 267              	.LASF7:
+ 268 00cb 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 268      206C6F6E 
+ 268      6720756E 
+ 268      7369676E 
+ 268      65642069 
+ 269              	.LASF1:
+ 270 00e2 756E7369 		.ascii	"unsigned char\000"
+ 270      676E6564 
+ 270      20636861 
+ 270      7200
+ 271              	.LASF11:
+ 272 00f0 63686172 		.ascii	"char\000"
+ 272      00
+ 273              	.LASF4:
+ 274 00f5 6C6F6E67 		.ascii	"long int\000"
+ 274      20696E74 
+ 274      00
+ 275              	.LASF2:
+ 276 00fe 73686F72 		.ascii	"short int\000"
+ 276      7420696E 
+ 276      7400
+ 277              	.LASF16:
+ 278 0108 73656E73 		.ascii	"sensors.c\000"
+ 278      6F72732E 
+ 278      6300
+ 279              	.LASF10:
+ 280 0112 646F7562 		.ascii	"double\000"
+ 280      6C6500
+ 281              	.LASF3:
+ 282 0119 73686F72 		.ascii	"short unsigned int\000"
+ 282      7420756E 
+ 282      7369676E 
+ 282      65642069 
+ 282      6E7400
+ 283              	.LASF0:
+ 284 012c 7369676E 		.ascii	"signed char\000"
+ 284      65642063 
+ 284      68617200 
+ 285              	.LASF9:
+ 286 0138 666C6F61 		.ascii	"float\000"
+ 286      7400
+ 287              	.LASF17:
+ 288 013e 443A5C44 		.ascii	"D:\\Dropbox\\IoT Development\\Cypress PSoC Developm"
+ 288      726F7062 
+ 288      6F785C49 
+ 288      6F542044 
+ 288      6576656C 
+ 289 016e 656E745C 		.ascii	"ent\\RTD Design.cydsn\000"
+ 289      52544420 
+ 289      44657369 
+ 289      676E2E63 
+ 289      7964736E 
+ 290              	.LASF13:
+ 291 0183 696E6974 		.ascii	"init_sensors\000"
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccaCDQUZ.s 			page 9
+
+
+ 291      5F73656E 
+ 291      736F7273 
+ 291      00
+ 292              	.LASF12:
+ 293 0190 73697A65 		.ascii	"sizetype\000"
+ 293      74797065 
+ 293      00
+ 294              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

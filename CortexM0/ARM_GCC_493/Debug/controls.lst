@@ -1,0 +1,503 @@
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"controls.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.init_controls,"ax",%progbits
+  18              		.align	2
+  19              		.global	init_controls
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	init_controls, %function
+  23              	init_controls:
+  24              	.LFB36:
+  25              		.file 1 "controls.c"
+   1:controls.c    **** /*
+   2:controls.c    ****  * Copyright 2017, Sierra Telecom. All Rights Reserved.
+   3:controls.c    ****  *
+   4:controls.c    ****  * This software, associated documentation and materials ("Software"),
+   5:controls.c    ****  * is owned by Sierra Telecom ("Sierra") and is protected by and subject to
+   6:controls.c    ****  * worldwide patent protection (United States and foreign),
+   7:controls.c    ****  * United States copyright laws and international treaty provisions.
+   8:controls.c    ****  * Therefore, you may use this Software only as provided in the license
+   9:controls.c    ****  * agreement accompanying the software package from which you
+  10:controls.c    ****  * obtained this Software ("EULA").
+  11:controls.c    ****  * If no EULA applies, Sierra hereby grants you a personal, non-exclusive,
+  12:controls.c    ****  * non-transferable license to copy, modify, and compile the Software
+  13:controls.c    ****  * source code solely for use in connection with Sierra's
+  14:controls.c    ****  * integrated circuit products. Any reproduction, modification, translation,
+  15:controls.c    ****  * compilation, or representation of this Software except as specified
+  16:controls.c    ****  * above is prohibited without the express written permission of Sierra.
+  17:controls.c    ****  *
+  18:controls.c    ****  * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  19:controls.c    ****  * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  20:controls.c    ****  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Sierra
+  21:controls.c    ****  * reserves the right to make changes to the Software without notice. Sierra
+  22:controls.c    ****  * does not assume any liability arising out of the application or use of the
+  23:controls.c    ****  * Software or any product or circuit described in the Software. Sierra does
+  24:controls.c    ****  * not authorize its products for use in any products where a malfunction or
+  25:controls.c    ****  * failure of the Sierra product may reasonably be expected to result in
+  26:controls.c    ****  * significant property damage, injury or death ("High Risk Product"). By
+  27:controls.c    ****  * including Sierra's product in a High Risk Product, the manufacturer
+  28:controls.c    ****  * of such system or application assumes all risk of such use and in doing
+  29:controls.c    ****  * so agrees to indemnify Sierra against all liability.
+  30:controls.c    ****  */
+  31:controls.c    **** /** @file cypress_slave_spi.c
+  32:controls.c    ****  *
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 2
+
+
+  33:controls.c    ****  *  Created on: April 26, 2017
+  34:controls.c    ****  *      Author: greg.phillips
+  35:controls.c    ****  */
+  36:controls.c    **** 
+  37:controls.c    **** 
+  38:controls.c    **** 
+  39:controls.c    **** #include <project.h>
+  40:controls.c    **** #include <stdint.h>
+  41:controls.c    **** #include <stdbool.h>
+  42:controls.c    **** #include <stdlib.h>
+  43:controls.c    **** 
+  44:controls.c    **** #include "leds.h"
+  45:controls.c    **** #include "arduino.h"
+  46:controls.c    **** #include "cypress_arduino.h"
+  47:controls.c    **** /******************************************************
+  48:controls.c    ****  *                      Macros
+  49:controls.c    ****  ******************************************************/
+  50:controls.c    **** 
+  51:controls.c    **** /******************************************************
+  52:controls.c    ****  *                    Constants
+  53:controls.c    ****  ******************************************************/
+  54:controls.c    **** 
+  55:controls.c    **** /******************************************************
+  56:controls.c    ****  *                   Enumerations
+  57:controls.c    ****  ******************************************************/
+  58:controls.c    **** 
+  59:controls.c    **** /******************************************************
+  60:controls.c    ****  *                 Type Definitions
+  61:controls.c    ****  ******************************************************/
+  62:controls.c    **** 
+  63:controls.c    **** /******************************************************
+  64:controls.c    ****  *                    Structures
+  65:controls.c    ****  ******************************************************/
+  66:controls.c    **** 
+  67:controls.c    **** /******************************************************
+  68:controls.c    ****  *               Function Declarations
+  69:controls.c    ****  ******************************************************/
+  70:controls.c    **** 
+  71:controls.c    **** /******************************************************
+  72:controls.c    ****  *               Variable Definitions
+  73:controls.c    ****  ******************************************************/
+  74:controls.c    **** 
+  75:controls.c    **** /******************************************************
+  76:controls.c    ****  *               Function Definitions
+  77:controls.c    ****  ******************************************************/
+  78:controls.c    **** 
+  79:controls.c    **** void init_controls(void)
+  80:controls.c    **** {
+  26              		.loc 1 80 0
+  27              		.cfi_startproc
+  28 0000 80B5     		push	{r7, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 7, -8
+  31              		.cfi_offset 14, -4
+  32 0002 00AF     		add	r7, sp, #0
+  33              		.cfi_def_cfa_register 7
+  81:controls.c    ****     /*
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 3
+
+
+  82:controls.c    ****      * Initialize the RGB LED to OFF
+  83:controls.c    ****      */ 
+  84:controls.c    ****     RGB_LED_OFF;
+  34              		.loc 1 84 0
+  35 0004 0120     		mov	r0, #1
+  36 0006 FFF7FEFF 		bl	LED_RED_Write
+  37 000a 0120     		mov	r0, #1
+  38 000c FFF7FEFF 		bl	LED_GREEN_Write
+  39 0010 0120     		mov	r0, #1
+  40 0012 FFF7FEFF 		bl	LED_BLUE_Write
+  85:controls.c    **** }
+  41              		.loc 1 85 0
+  42 0016 BD46     		mov	sp, r7
+  43              		@ sp needed
+  44 0018 80BD     		pop	{r7, pc}
+  45              		.cfi_endproc
+  46              	.LFE36:
+  47              		.size	init_controls, .-init_controls
+  48 001a C046     		.section	.text.process_controls,"ax",%progbits
+  49              		.align	2
+  50              		.global	process_controls
+  51              		.code	16
+  52              		.thumb_func
+  53              		.type	process_controls, %function
+  54              	process_controls:
+  55              	.LFB37:
+  86:controls.c    **** 
+  87:controls.c    **** /**
+  88:controls.c    ****   * @brief any controls events
+  89:controls.c    ****   * @param  None
+  90:controls.c    ****   * @retval : None
+  91:controls.c    ****   */
+  92:controls.c    **** 
+  93:controls.c    **** 
+  94:controls.c    **** void process_controls(void)
+  95:controls.c    **** {
+  56              		.loc 1 95 0
+  57              		.cfi_startproc
+  58 0000 80B5     		push	{r7, lr}
+  59              		.cfi_def_cfa_offset 8
+  60              		.cfi_offset 7, -8
+  61              		.cfi_offset 14, -4
+  62 0002 00AF     		add	r7, sp, #0
+  63              		.cfi_def_cfa_register 7
+  96:controls.c    **** 
+  97:controls.c    **** }
+  64              		.loc 1 97 0
+  65 0004 BD46     		mov	sp, r7
+  66              		@ sp needed
+  67 0006 80BD     		pop	{r7, pc}
+  68              		.cfi_endproc
+  69              	.LFE37:
+  70              		.size	process_controls, .-process_controls
+  71              		.text
+  72              	.Letext0:
+  73              		.section	.debug_info,"",%progbits
+  74              	.Ldebug_info0:
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 4
+
+
+  75 0000 A6000000 		.4byte	0xa6
+  76 0004 0400     		.2byte	0x4
+  77 0006 00000000 		.4byte	.Ldebug_abbrev0
+  78 000a 04       		.byte	0x4
+  79 000b 01       		.uleb128 0x1
+  80 000c 0E000000 		.4byte	.LASF15
+  81 0010 01       		.byte	0x1
+  82 0011 FF000000 		.4byte	.LASF16
+  83 0015 44010000 		.4byte	.LASF17
+  84 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  85 001d 00000000 		.4byte	0
+  86 0021 00000000 		.4byte	.Ldebug_line0
+  87 0025 02       		.uleb128 0x2
+  88 0026 01       		.byte	0x1
+  89 0027 06       		.byte	0x6
+  90 0028 32010000 		.4byte	.LASF0
+  91 002c 02       		.uleb128 0x2
+  92 002d 01       		.byte	0x1
+  93 002e 08       		.byte	0x8
+  94 002f B7000000 		.4byte	.LASF1
+  95 0033 02       		.uleb128 0x2
+  96 0034 02       		.byte	0x2
+  97 0035 05       		.byte	0x5
+  98 0036 89010000 		.4byte	.LASF2
+  99 003a 02       		.uleb128 0x2
+ 100 003b 02       		.byte	0x2
+ 101 003c 07       		.byte	0x7
+ 102 003d 1F010000 		.4byte	.LASF3
+ 103 0041 02       		.uleb128 0x2
+ 104 0042 04       		.byte	0x4
+ 105 0043 05       		.byte	0x5
+ 106 0044 0F010000 		.4byte	.LASF4
+ 107 0048 02       		.uleb128 0x2
+ 108 0049 04       		.byte	0x4
+ 109 004a 07       		.byte	0x7
+ 110 004b C5000000 		.4byte	.LASF5
+ 111 004f 02       		.uleb128 0x2
+ 112 0050 08       		.byte	0x8
+ 113 0051 05       		.byte	0x5
+ 114 0052 00000000 		.4byte	.LASF6
+ 115 0056 02       		.uleb128 0x2
+ 116 0057 08       		.byte	0x8
+ 117 0058 07       		.byte	0x7
+ 118 0059 D7000000 		.4byte	.LASF7
+ 119 005d 03       		.uleb128 0x3
+ 120 005e 04       		.byte	0x4
+ 121 005f 05       		.byte	0x5
+ 122 0060 696E7400 		.ascii	"int\000"
+ 123 0064 02       		.uleb128 0x2
+ 124 0065 04       		.byte	0x4
+ 125 0066 07       		.byte	0x7
+ 126 0067 9C000000 		.4byte	.LASF8
+ 127 006b 02       		.uleb128 0x2
+ 128 006c 04       		.byte	0x4
+ 129 006d 04       		.byte	0x4
+ 130 006e 3E010000 		.4byte	.LASF9
+ 131 0072 02       		.uleb128 0x2
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 5
+
+
+ 132 0073 08       		.byte	0x8
+ 133 0074 04       		.byte	0x4
+ 134 0075 18010000 		.4byte	.LASF10
+ 135 0079 02       		.uleb128 0x2
+ 136 007a 01       		.byte	0x1
+ 137 007b 08       		.byte	0x8
+ 138 007c 0A010000 		.4byte	.LASF11
+ 139 0080 02       		.uleb128 0x2
+ 140 0081 04       		.byte	0x4
+ 141 0082 07       		.byte	0x7
+ 142 0083 93010000 		.4byte	.LASF12
+ 143 0087 04       		.uleb128 0x4
+ 144 0088 A9000000 		.4byte	.LASF13
+ 145 008c 01       		.byte	0x1
+ 146 008d 4F       		.byte	0x4f
+ 147 008e 00000000 		.4byte	.LFB36
+ 148 0092 1A000000 		.4byte	.LFE36-.LFB36
+ 149 0096 01       		.uleb128 0x1
+ 150 0097 9C       		.byte	0x9c
+ 151 0098 05       		.uleb128 0x5
+ 152 0099 EE000000 		.4byte	.LASF14
+ 153 009d 01       		.byte	0x1
+ 154 009e 5E       		.byte	0x5e
+ 155 009f 00000000 		.4byte	.LFB37
+ 156 00a3 08000000 		.4byte	.LFE37-.LFB37
+ 157 00a7 01       		.uleb128 0x1
+ 158 00a8 9C       		.byte	0x9c
+ 159 00a9 00       		.byte	0
+ 160              		.section	.debug_abbrev,"",%progbits
+ 161              	.Ldebug_abbrev0:
+ 162 0000 01       		.uleb128 0x1
+ 163 0001 11       		.uleb128 0x11
+ 164 0002 01       		.byte	0x1
+ 165 0003 25       		.uleb128 0x25
+ 166 0004 0E       		.uleb128 0xe
+ 167 0005 13       		.uleb128 0x13
+ 168 0006 0B       		.uleb128 0xb
+ 169 0007 03       		.uleb128 0x3
+ 170 0008 0E       		.uleb128 0xe
+ 171 0009 1B       		.uleb128 0x1b
+ 172 000a 0E       		.uleb128 0xe
+ 173 000b 55       		.uleb128 0x55
+ 174 000c 17       		.uleb128 0x17
+ 175 000d 11       		.uleb128 0x11
+ 176 000e 01       		.uleb128 0x1
+ 177 000f 10       		.uleb128 0x10
+ 178 0010 17       		.uleb128 0x17
+ 179 0011 00       		.byte	0
+ 180 0012 00       		.byte	0
+ 181 0013 02       		.uleb128 0x2
+ 182 0014 24       		.uleb128 0x24
+ 183 0015 00       		.byte	0
+ 184 0016 0B       		.uleb128 0xb
+ 185 0017 0B       		.uleb128 0xb
+ 186 0018 3E       		.uleb128 0x3e
+ 187 0019 0B       		.uleb128 0xb
+ 188 001a 03       		.uleb128 0x3
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 6
+
+
+ 189 001b 0E       		.uleb128 0xe
+ 190 001c 00       		.byte	0
+ 191 001d 00       		.byte	0
+ 192 001e 03       		.uleb128 0x3
+ 193 001f 24       		.uleb128 0x24
+ 194 0020 00       		.byte	0
+ 195 0021 0B       		.uleb128 0xb
+ 196 0022 0B       		.uleb128 0xb
+ 197 0023 3E       		.uleb128 0x3e
+ 198 0024 0B       		.uleb128 0xb
+ 199 0025 03       		.uleb128 0x3
+ 200 0026 08       		.uleb128 0x8
+ 201 0027 00       		.byte	0
+ 202 0028 00       		.byte	0
+ 203 0029 04       		.uleb128 0x4
+ 204 002a 2E       		.uleb128 0x2e
+ 205 002b 00       		.byte	0
+ 206 002c 3F       		.uleb128 0x3f
+ 207 002d 19       		.uleb128 0x19
+ 208 002e 03       		.uleb128 0x3
+ 209 002f 0E       		.uleb128 0xe
+ 210 0030 3A       		.uleb128 0x3a
+ 211 0031 0B       		.uleb128 0xb
+ 212 0032 3B       		.uleb128 0x3b
+ 213 0033 0B       		.uleb128 0xb
+ 214 0034 27       		.uleb128 0x27
+ 215 0035 19       		.uleb128 0x19
+ 216 0036 11       		.uleb128 0x11
+ 217 0037 01       		.uleb128 0x1
+ 218 0038 12       		.uleb128 0x12
+ 219 0039 06       		.uleb128 0x6
+ 220 003a 40       		.uleb128 0x40
+ 221 003b 18       		.uleb128 0x18
+ 222 003c 9642     		.uleb128 0x2116
+ 223 003e 19       		.uleb128 0x19
+ 224 003f 00       		.byte	0
+ 225 0040 00       		.byte	0
+ 226 0041 05       		.uleb128 0x5
+ 227 0042 2E       		.uleb128 0x2e
+ 228 0043 00       		.byte	0
+ 229 0044 3F       		.uleb128 0x3f
+ 230 0045 19       		.uleb128 0x19
+ 231 0046 03       		.uleb128 0x3
+ 232 0047 0E       		.uleb128 0xe
+ 233 0048 3A       		.uleb128 0x3a
+ 234 0049 0B       		.uleb128 0xb
+ 235 004a 3B       		.uleb128 0x3b
+ 236 004b 0B       		.uleb128 0xb
+ 237 004c 27       		.uleb128 0x27
+ 238 004d 19       		.uleb128 0x19
+ 239 004e 11       		.uleb128 0x11
+ 240 004f 01       		.uleb128 0x1
+ 241 0050 12       		.uleb128 0x12
+ 242 0051 06       		.uleb128 0x6
+ 243 0052 40       		.uleb128 0x40
+ 244 0053 18       		.uleb128 0x18
+ 245 0054 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 7
+
+
+ 246 0056 19       		.uleb128 0x19
+ 247 0057 00       		.byte	0
+ 248 0058 00       		.byte	0
+ 249 0059 00       		.byte	0
+ 250              		.section	.debug_aranges,"",%progbits
+ 251 0000 24000000 		.4byte	0x24
+ 252 0004 0200     		.2byte	0x2
+ 253 0006 00000000 		.4byte	.Ldebug_info0
+ 254 000a 04       		.byte	0x4
+ 255 000b 00       		.byte	0
+ 256 000c 0000     		.2byte	0
+ 257 000e 0000     		.2byte	0
+ 258 0010 00000000 		.4byte	.LFB36
+ 259 0014 1A000000 		.4byte	.LFE36-.LFB36
+ 260 0018 00000000 		.4byte	.LFB37
+ 261 001c 08000000 		.4byte	.LFE37-.LFB37
+ 262 0020 00000000 		.4byte	0
+ 263 0024 00000000 		.4byte	0
+ 264              		.section	.debug_ranges,"",%progbits
+ 265              	.Ldebug_ranges0:
+ 266 0000 00000000 		.4byte	.LFB36
+ 267 0004 1A000000 		.4byte	.LFE36
+ 268 0008 00000000 		.4byte	.LFB37
+ 269 000c 08000000 		.4byte	.LFE37
+ 270 0010 00000000 		.4byte	0
+ 271 0014 00000000 		.4byte	0
+ 272              		.section	.debug_line,"",%progbits
+ 273              	.Ldebug_line0:
+ 274 0000 4A000000 		.section	.debug_str,"MS",%progbits,1
+ 274      02002100 
+ 274      00000201 
+ 274      FB0E0D00 
+ 274      01010101 
+ 275              	.LASF6:
+ 276 0000 6C6F6E67 		.ascii	"long long int\000"
+ 276      206C6F6E 
+ 276      6720696E 
+ 276      7400
+ 277              	.LASF15:
+ 278 000e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 278      4320342E 
+ 278      392E3320 
+ 278      32303135 
+ 278      30333033 
+ 279 0041 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 279      20726576 
+ 279      6973696F 
+ 279      6E203232 
+ 279      31323230 
+ 280 0074 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 280      66756E63 
+ 280      74696F6E 
+ 280      2D736563 
+ 280      74696F6E 
+ 281              	.LASF8:
+ 282 009c 756E7369 		.ascii	"unsigned int\000"
+ 282      676E6564 
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 8
+
+
+ 282      20696E74 
+ 282      00
+ 283              	.LASF13:
+ 284 00a9 696E6974 		.ascii	"init_controls\000"
+ 284      5F636F6E 
+ 284      74726F6C 
+ 284      7300
+ 285              	.LASF1:
+ 286 00b7 756E7369 		.ascii	"unsigned char\000"
+ 286      676E6564 
+ 286      20636861 
+ 286      7200
+ 287              	.LASF5:
+ 288 00c5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 288      20756E73 
+ 288      69676E65 
+ 288      6420696E 
+ 288      7400
+ 289              	.LASF7:
+ 290 00d7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 290      206C6F6E 
+ 290      6720756E 
+ 290      7369676E 
+ 290      65642069 
+ 291              	.LASF14:
+ 292 00ee 70726F63 		.ascii	"process_controls\000"
+ 292      6573735F 
+ 292      636F6E74 
+ 292      726F6C73 
+ 292      00
+ 293              	.LASF16:
+ 294 00ff 636F6E74 		.ascii	"controls.c\000"
+ 294      726F6C73 
+ 294      2E6300
+ 295              	.LASF11:
+ 296 010a 63686172 		.ascii	"char\000"
+ 296      00
+ 297              	.LASF4:
+ 298 010f 6C6F6E67 		.ascii	"long int\000"
+ 298      20696E74 
+ 298      00
+ 299              	.LASF10:
+ 300 0118 646F7562 		.ascii	"double\000"
+ 300      6C6500
+ 301              	.LASF3:
+ 302 011f 73686F72 		.ascii	"short unsigned int\000"
+ 302      7420756E 
+ 302      7369676E 
+ 302      65642069 
+ 302      6E7400
+ 303              	.LASF0:
+ 304 0132 7369676E 		.ascii	"signed char\000"
+ 304      65642063 
+ 304      68617200 
+ 305              	.LASF9:
+ 306 013e 666C6F61 		.ascii	"float\000"
+ 306      7400
+ARM GAS  C:\Users\GREG~1.PHI\AppData\Local\Temp\ccwVfIN7.s 			page 9
+
+
+ 307              	.LASF17:
+ 308 0144 443A5C44 		.ascii	"D:\\Dropbox\\IoT Development\\Cypress PSoC Developm"
+ 308      726F7062 
+ 308      6F785C49 
+ 308      6F542044 
+ 308      6576656C 
+ 309 0174 656E745C 		.ascii	"ent\\RTD Design.cydsn\000"
+ 309      52544420 
+ 309      44657369 
+ 309      676E2E63 
+ 309      7964736E 
+ 310              	.LASF2:
+ 311 0189 73686F72 		.ascii	"short int\000"
+ 311      7420696E 
+ 311      7400
+ 312              	.LASF12:
+ 313 0193 73697A65 		.ascii	"sizetype\000"
+ 313      74797065 
+ 313      00
+ 314              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
